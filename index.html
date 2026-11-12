@@ -1,0 +1,1315 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8">
+<title>每一個選擇都很重要</title>
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="description" content="Every choice matters. 每一個選擇都很重要：認識當季與在地食材，比較食譜碳排。">
+<meta name="theme-color" content="#007580">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Open+Sans:wdth,wght@75..100,400..800&family=Noto+Sans+TC:wght@400;500;700;900&display=swap">
+<style>
+/* Layout: one long, projection-sized page. Sticky nav, month slider drives three food groups (veg / fruit / seafood),
+   "I want to eat this" picks feed a recipe section, then carbon know-how cards, pledge, sources.
+   Palette follows the Climate Fresk community charter: teal 00C6C1 / 007580, red E90000, yellow FFC629, pale E9F4F8. */
+:root {
+  --bg: #eef6f8;
+  --surface: #ffffff;
+  --ink: #0b2628;
+  --ink2: #466a6e;
+  --line: #cde2e7;
+  --teal: #00c6c1;
+  --teal-d: #007580;
+  --teal-bg: #d8f3f1;
+  --red: #d40000;
+  --red-bg: #fde4e4;
+  --yellow: #ffc629;
+  --yellow-bg: #fff4d1;
+  --shadow: 0 1px 0 rgba(0,40,45,.06);
+  --f-head: "Open Sans", "Noto Sans TC", system-ui, sans-serif;
+  --f-body: "Open Sans", "Noto Sans TC", system-ui, sans-serif;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #081c1e; --surface: #0f2c2e; --ink: #e8f5f5; --ink2: #9ebfc2; --line: #21464a;
+    --teal-d: #35e0db; --teal-bg: #0d3a3b; --red: #ff7070; --red-bg: #3b1a1c; --yellow-bg: #3a3012;
+    --shadow: none; color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --bg: #081c1e; --surface: #0f2c2e; --ink: #e8f5f5; --ink2: #9ebfc2; --line: #21464a;
+  --teal-d: #35e0db; --teal-bg: #0d3a3b; --red: #ff7070; --red-bg: #3b1a1c; --yellow-bg: #3a3012;
+  --shadow: none; color-scheme: dark;
+}
+* { box-sizing: border-box; }
+body {
+  background: var(--bg); color: var(--ink); font-family: var(--f-body); font-size: 18px; line-height: 1.6;
+  padding-left: max(16px, env(safe-area-inset-left, 0px));
+  padding-right: max(16px, env(safe-area-inset-right, 0px));
+  padding-block: 0 48px;
+}
+.wrap { max-width: 1120px; margin: 0 auto; }
+h1, h2, h3 { font-family: var(--f-head); font-stretch: 75%; text-wrap: balance; margin: 0; line-height: 1.1; }
+h2 { font-size: clamp(1.9rem, 4vw, 2.6rem); font-weight: 800; }
+h3 { font-size: 1.35rem; font-weight: 700; }
+p { margin: 0; }
+a { color: var(--teal-d); }
+button, select, input { font: inherit; color: inherit; }
+button:focus-visible, select:focus-visible, input:focus-visible, a:focus-visible { outline: 3px solid var(--yellow); outline-offset: 2px; }
+
+.top { display: flex; flex-wrap: wrap; gap: 12px 20px; align-items: center; justify-content: space-between; padding-block: 18px 10px; }
+.brand { font-stretch: 75%; font-weight: 800; font-size: 1.05rem; letter-spacing: .08em; text-transform: uppercase; color: var(--teal-d); }
+.ctrls { display: flex; flex-wrap: wrap; gap: 10px; align-items: center; }
+select, .btn { background: var(--surface); border: 2px solid var(--line); border-radius: 10px; padding: 8px 14px; min-height: 44px; cursor: pointer; }
+select { max-width: 100%; }
+.btn:hover, select:hover { border-color: var(--teal-d); }
+
+.hero { padding-block: 22px 28px; display: grid; gap: 14px; }
+.hero h1 { font-size: clamp(2.8rem, 8.5vw, 6rem); font-weight: 800; letter-spacing: -.01em; }
+.hero h1 em { font-style: normal; color: var(--teal-d); }
+.hero .sub { font-size: clamp(1.1rem, 2.2vw, 1.4rem); color: var(--ink2); max-width: 46ch; }
+.hero .reg { display: inline-flex; gap: 8px; align-items: center; font-weight: 700; flex-wrap: wrap; }
+.pill { display: inline-block; padding: 2px 12px; border-radius: 99px; font-size: .85rem; font-weight: 700; background: var(--teal-bg); color: var(--teal-d); }
+.pill.red { background: var(--red-bg); color: var(--red); }
+.pill.yel { background: var(--yellow-bg); color: var(--ink); }
+
+.nav { position: sticky; top: env(safe-area-inset-top, 0px); z-index: 5; background: var(--bg); border-block: 2px solid var(--line); }
+body::before { content: ""; position: fixed; inset: 0 0 auto; height: env(safe-area-inset-top, 0px); z-index: 10; background: var(--bg); }
+.nav .wrap { display: flex; gap: 6px; overflow-x: auto; padding-block: 6px; }
+.nav a { white-space: nowrap; text-decoration: none; color: var(--ink); font-weight: 700; padding: 8px 14px; border-radius: 8px; }
+.nav a:hover { background: var(--teal-bg); }
+
+section { padding-block: 44px 8px; scroll-margin-top: 64px; }
+.lead { color: var(--ink2); margin-top: 8px; max-width: 62ch; }
+.panel { background: var(--surface); border: 2px solid var(--line); border-radius: 16px; padding: 22px; box-shadow: var(--shadow); }
+.note { font-size: .88rem; color: var(--ink2); }
+
+/* month */
+.monthbox { display: grid; gap: 14px; margin-top: 22px; }
+.mhead { display: flex; flex-wrap: wrap; align-items: baseline; gap: 6px 16px; }
+.mbig { font-stretch: 75%; font-weight: 800; font-size: clamp(3.4rem, 11vw, 6.5rem); line-height: 1; color: var(--teal-d); }
+.mname { font-size: 1.4rem; font-weight: 700; color: var(--ink2); }
+input[type=range] { width: 100%; height: 44px; accent-color: var(--teal-d); cursor: pointer; }
+.mrow { display: grid; grid-template-columns: repeat(12, 1fr); gap: 4px; }
+.mrow button { border: 2px solid var(--line); background: var(--surface); border-radius: 8px; padding: 6px 0; min-height: 40px; cursor: pointer; font-weight: 700; }
+.mrow button[aria-pressed=true] { background: var(--teal-d); border-color: var(--teal-d); color: #fff; }
+.mrow button.now:not([aria-pressed=true]) { border-color: var(--yellow); }
+@media (max-width: 560px) { .mrow { grid-template-columns: repeat(6, 1fr); } }
+.legend { display: flex; flex-wrap: wrap; gap: 8px 20px; font-size: .95rem; color: var(--ink2); }
+
+/* groups */
+.grp { margin-top: 34px; }
+.grp h3 { display: flex; align-items: baseline; gap: 12px; font-size: 1.7rem; font-weight: 800; padding-bottom: 8px; border-bottom: 4px solid var(--teal); }
+.grp h3 small { font-size: 1rem; font-weight: 600; color: var(--ink2); }
+.grp.f h3 { border-bottom-color: var(--yellow); }
+.grp.s h3 { border-bottom-color: var(--teal-d); }
+.grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(190px, 1fr)); gap: 14px; margin-top: 16px; }
+.tile { background: var(--surface); border: 2px solid var(--line); border-radius: 14px; padding: 14px; display: grid; gap: 8px; align-content: start; min-width: 0; }
+.tile.on { border-color: var(--teal-d); background: var(--teal-bg); }
+.tile .em { font-size: 2.4rem; line-height: 1; }
+.tile .nm { font-size: 1.4rem; font-weight: 800; font-stretch: 85%; line-height: 1.15; }
+.tile .nm2 { color: var(--ink2); font-size: .9rem; }
+.tags { display: flex; flex-wrap: wrap; gap: 6px; }
+.want { border: 2px solid var(--teal-d); background: transparent; color: var(--teal-d); border-radius: 10px; padding: 6px 10px; min-height: 44px; cursor: pointer; font-weight: 800; }
+.want:hover { background: var(--teal-bg); }
+.want[aria-pressed=true] { background: var(--teal-d); color: #fff; }
+.mini { border: 2px solid var(--line); background: var(--bg); border-radius: 8px; padding: 4px 10px; min-height: 36px; cursor: pointer; font-size: .9rem; font-weight: 700; }
+.mini:hover { border-color: var(--teal-d); }
+
+/* cook */
+.chips { display: flex; flex-wrap: wrap; gap: 8px; min-height: 48px; margin-top: 16px; }
+.chip { display: inline-flex; gap: 8px; align-items: center; border: 2px solid var(--teal-d); border-radius: 99px; padding: 4px 6px 4px 14px; background: var(--teal-bg); font-weight: 700; }
+.chip button { border: 0; background: transparent; cursor: pointer; width: 32px; height: 32px; border-radius: 50%; font-size: 1.1rem; color: var(--ink2); }
+.chip button:hover { background: var(--line); }
+.subh { margin: 22px 0 0; font-size: 1.15rem; font-weight: 800; color: var(--ink2); }
+.co2 { display: flex; flex-wrap: wrap; align-items: baseline; gap: 4px 8px; padding: 10px 12px; border-radius: 10px; background: var(--bg); }
+.co2 b { font-size: 2rem; font-stretch: 75%; font-weight: 800; line-height: 1; color: var(--teal-d); }
+.co2.lv1 b { color: var(--ink); }
+.co2.lv2 b { color: var(--red); }
+.grp.m h3 { border-bottom-color: var(--red); }
+.recipes { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 16px; margin-top: 16px; }
+.rcp { background: var(--surface); border: 2px solid var(--line); border-top: 6px solid var(--yellow); border-radius: 14px; padding: 18px; display: grid; gap: 10px; align-content: start; min-width: 0; }
+.rcp h3 { font-size: 1.5rem; font-weight: 800; }
+.rcp ol { margin: 0; padding-left: 1.4em; display: grid; gap: 4px; }
+.empty { padding: 22px; border: 2px dashed var(--line); border-radius: 14px; color: var(--ink2); margin-top: 16px; }
+.story { margin-top: 16px; padding: 16px 18px; border-radius: 12px; background: var(--teal-bg); display: grid; gap: 4px; }
+
+/* knowledge */
+.kgrid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 18px; margin-top: 22px; }
+.kc { display: grid; gap: 8px; align-content: start; min-width: 0; }
+.kc h3 { font-size: 1.3rem; }
+.bars { display: grid; gap: 10px; margin-top: 6px; }
+.bar { display: grid; grid-template-columns: 7em 1fr 3.6em; gap: 10px; align-items: center; }
+.bar .track { background: var(--bg); border-radius: 6px; height: 28px; overflow: hidden; }
+.bar .fill { height: 100%; background: var(--teal-d); border-radius: 6px; min-width: 4px; }
+.bar.hi .fill { background: var(--red); }
+.bar .v { font-weight: 800; text-align: right; font-variant-numeric: tabular-nums; }
+.duel { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-top: 6px; }
+.duel div, .bigstat { border-radius: 12px; padding: 12px; background: var(--bg); }
+.duel b, .bigstat b { font-size: 2.4rem; font-stretch: 75%; font-weight: 800; display: block; line-height: 1.1; }
+.duel .hi b, .bigstat.hi b { color: var(--red); }
+.duel .lo b, .bigstat.lo b { color: var(--teal-d); }
+.duel span, .bigstat span { font-size: .9rem; color: var(--ink2); }
+sup a { text-decoration: none; font-weight: 700; padding: 0 1px; }
+.callout ol { margin: 8px 0; padding-left: 1.5em; display: grid; gap: 4px; }
+.callout { margin-top: 24px; padding: 18px 20px; border-radius: 14px; background: var(--yellow-bg); font-weight: 600; }
+
+
+.quiz{margin-top:22px;display:grid;gap:18px}
+.qbar{display:flex;flex-wrap:wrap;gap:10px 16px;align-items:center;justify-content:space-between}
+.qscore{font-weight:800;font-size:1.2rem}
+.qgrid{display:grid;grid-template-columns:repeat(auto-fit,minmax(320px,1fr));gap:18px}
+.qc{display:grid;gap:12px;align-content:start;min-width:0}
+.qn{font-weight:800;color:var(--teal-d);font-stretch:75%;letter-spacing:.06em}
+.qc h3{font-size:1.45rem;line-height:1.25}
+.opts{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.opt{border:2px solid var(--line);background:var(--bg);border-radius:12px;padding:14px 10px;min-height:72px;cursor:pointer;font-weight:800;font-size:1.1rem;line-height:1.25}
+.opt:hover:not(:disabled){border-color:var(--teal-d)}
+.opt:disabled{cursor:default}
+.opt.right{background:var(--teal-bg);border-color:var(--teal-d)}
+.opt.wrong{background:var(--red-bg);border-color:var(--red)}
+.ans{padding:12px 14px;border-radius:12px;background:var(--yellow-bg)}
+.ans b{display:block;margin-bottom:4px}
+@media (max-width:420px){.opts{grid-template-columns:1fr}}
+
+/* pledge */
+.pledges { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 12px; margin-top: 18px; }
+.pledge { text-align: left; border: 2px solid var(--line); background: var(--surface); border-radius: 14px; padding: 16px; cursor: pointer; font-weight: 700; min-height: 84px; }
+.pledge:hover { border-color: var(--teal-d); }
+.pledge[aria-pressed=true] { border-color: var(--teal-d); background: var(--teal-bg); }
+.pledged { margin-top: 16px; padding: 16px 18px; border-radius: 12px; background: var(--teal-bg); display: none; gap: 10px; }
+.pledged.on { display: grid; }
+
+.tips { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 14px; margin-top: 18px; }
+.tip { padding: 14px 16px; border-radius: 12px; border: 2px solid var(--line); background: var(--surface); }
+.src { margin-top: 18px; font-size: .92rem; color: var(--ink2); }
+.src ol { padding-left: 1.6em; margin: 8px 0 0; display: grid; gap: 6px; }
+footer { margin-top: 44px; padding-top: 18px; border-top: 2px solid var(--line); color: var(--ink2); font-size: .92rem; display: grid; gap: 6px; }
+@media (prefers-reduced-motion: reduce) { * { scroll-behavior: auto !important; transition: none !important; } }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="top">
+    <div class="brand" id="brand"></div>
+    <div class="ctrls">
+      <select id="region"></select>
+      <button class="btn" id="langBtn" type="button"></button>
+    </div>
+  </div>
+  <header class="hero">
+    <h1 id="h1"></h1>
+    <p class="sub" id="sub"></p>
+    <div class="reg"><span class="pill" id="regPill"></span><span class="note" id="regNote"></span></div>
+  </header>
+</div>
+
+<nav class="nav" aria-label="sections"><div class="wrap" id="nav"></div></nav>
+
+<div class="wrap">
+  <section id="season">
+    <h2 id="t-season"></h2>
+    <p class="lead" id="l-season"></p>
+    <div class="monthbox panel">
+      <div class="mhead"><div class="mbig" id="mbig"></div><div class="mname" id="mname"></div></div>
+      <input type="range" id="month" min="1" max="12" step="1" aria-labelledby="t-season">
+      <div class="mrow" id="mrow"></div>
+      <div class="legend" id="legend"></div>
+      <p class="note" id="regInfo"></p>
+    </div>
+    <div id="groups"></div>
+  </section>
+
+  <section id="cook">
+    <h2 id="t-cook"></h2>
+    <p class="lead" id="l-cook"></p>
+    <div class="chips" id="chips"></div>
+    <div class="recipes" id="recipes"></div>
+    <div class="story" id="story"></div>
+  </section>
+
+  <section id="carbon">
+    <h2 id="t-carbon"></h2>
+    <p class="lead" id="l-carbon"></p>
+    <div class="quiz" id="kgrid"></div>
+    <div class="callout" id="callout"></div>
+  </section>
+
+  <section id="pledge">
+    <h2 id="t-pledge"></h2>
+    <p class="lead" id="l-pledge"></p>
+    <div class="pledges" id="pledges"></div>
+    <div class="pledged" id="pledged"></div>
+  </section>
+
+  <section id="tips">
+    <h2 id="t-tips"></h2>
+    <div class="tips" id="tipsGrid"></div>
+    <div class="src panel" id="src"></div>
+  </section>
+
+  <footer id="foot"></footer>
+</div>
+
+<script>
+/* ---------- items ---------- */
+var ITEMS = {};
+/* kind: v veg, f fruit, s seafood. cold: 0 ambient, 1 chilled, 2 full cold chain. dist: n near, f far. st: recipe style */
+function add(id, z, e, em, k, c, st, extra) {
+  var o = { id: id, z: z, e: e, em: em, k: k, c: c, st: st, d: 'n' };
+  if (extra) for (var key in extra) o[key] = extra[key];
+  ITEMS[id] = o;
+}
+/* vegetables */
+add('spinach','菠菜','Spinach','🥬','v',1,'leaf');
+add('tongho','茼蒿','Garland chrysanthemum','🌿','v',1,'leaf');
+add('kailan','芥蘭','Chinese broccoli','🥬','v',1,'leaf');
+add('cauli','白花椰菜','Cauliflower','🥦','v',1,'veg');
+add('broccoli','青花菜','Broccoli','🥦','v',1,'veg');
+add('wbamboo','冬筍','Winter bamboo shoot','🎋','v',1,'shoot');
+add('napa','包心白菜','Napa cabbage','🥬','v',1,'leaf');
+add('carrot','胡蘿蔔','Carrot','🥕','v',0,'root');
+add('onion','洋蔥','Onion','🧅','v',0,'veg');
+add('garlicshoot','蒜苗','Garlic shoots','🌱','v',1,'veg');
+add('fushan','福山萵苣','Fushan lettuce','🥬','v',1,'leaf');
+add('chive','韭菜','Chinese chives','🌱','v',1,'veg');
+add('scallion','青蔥','Spring onion','🌱','v',1,'herb');
+add('zucchini','櫛瓜','Zucchini','🥒','v',1,'gourd');
+add('asparagus','蘆筍','Asparagus','🌿','v',1,'shoot');
+add('tomato','牛番茄','Beefsteak tomato','🍅','v',1,'tomato');
+add('whitemush','美白菇','White beech mushroom','🍄','v',1,'mush');
+add('greenbean','四季豆','Green beans','🫛','v',1,'veg');
+add('abamboo','箭竹筍','Arrow bamboo shoot','🎋','v',1,'shoot');
+add('sprouts','黃豆芽','Soybean sprouts','🌱','v',1,'veg');
+add('chayote','龍鬚菜','Chayote shoots','🌿','v',1,'leaf');
+add('oystermush','秀珍菇','Oyster mushroom','🍄','v',1,'mush');
+add('cucumber','小黃瓜','Cucumber','🥒','v',1,'gourd');
+add('woodear','黑木耳','Wood ear mushroom','🍄','v',1,'veg');
+add('okra','秋葵','Okra','🫛','v',1,'veg');
+add('loofah','絲瓜','Loofah','🥒','v',1,'gourd');
+add('yardbean','豇豆','Yardlong bean','🫛','v',1,'veg');
+add('mabamboo','麻竹筍','Ma bamboo shoot','🎋','v',1,'shoot');
+add('basil','九層塔','Taiwan basil','🌿','v',1,'herb');
+add('pumpkin','栗子南瓜','Kabocha squash','🎃','v',0,'root');
+add('bittermelon','白玉苦瓜','White bitter melon','🥒','v',1,'gourd');
+add('lotusseed','蓮子','Lotus seeds','🪷','v',0,'seed');
+add('lily','百合','Lily bulb','🌷','v',1,'seed');
+add('bottlegourd','扁蒲','Bottle gourd','🥒','v',1,'gourd');
+add('amaranth','紅莧菜','Red amaranth','🌿','v',1,'leaf');
+add('wintermelon','冬瓜','Winter melon','🥒','v',0,'gourd');
+add('chili','辣椒','Chili pepper','🌶️','v',1,'veg');
+add('corn','玉米','Sweet corn','🌽','v',1,'corn');
+add('waterlily','水蓮','Water lily stems','🌿','v',1,'leaf');
+add('wildbitter','山苦瓜','Wild bitter gourd','🥒','v',1,'gourd');
+add('daylily','金針花','Daylily buds','🌼','v',1,'veg');
+add('chiveflower','韭菜花','Chive flowers','🌱','v',1,'veg');
+add('papaya','青木瓜','Green papaya','🍈','v',0,'root');
+add('babycorn','玉米筍','Baby corn','🌽','v',1,'shoot');
+add('yam','山藥','Chinese yam','🍠','v',0,'root');
+add('lotusroot','蓮藕','Lotus root','🥔','v',1,'root');
+add('greenpepper','青椒','Green pepper','🫑','v',1,'veg');
+add('shantong','山茼蒿','Mountain garland chrysanthemum','🌿','v',1,'leaf');
+add('waterbamboo','茭白筍','Water bamboo','🎋','v',1,'shoot');
+add('bokchoy','青江菜','Bok choy','🥬','v',1,'leaf');
+add('stickypepper','糯米椒','Sweet finger pepper','🌶️','v',1,'veg');
+add('brussels','球芽甘藍','Brussels sprouts','🥬','v',1,'veg');
+add('daikon','白蘿蔔','Daikon radish','🥕','v',0,'root');
+add('kohlrabi','大頭菜','Kohlrabi','🥬','v',0,'root');
+add('fern','山蘇','Bird’s-nest fern','🌿','v',1,'leaf');
+add('cabbage','高麗菜','Cabbage','🥬','v',1,'leaf');
+add('shiitake','香菇','Shiitake','🍄','v',1,'mush');
+add('cilantro','芫荽','Coriander','🌿','v',1,'herb');
+add('lettuce','結球萵苣','Iceberg lettuce','🥬','v',1,'leaf');
+add('kingoyster','杏鮑菇','King oyster mushroom','🍄','v',1,'mush');
+/* fruit */
+add('orange','柳丁','Orange','🍊','f',0,'fruit');
+add('strawberry','草莓','Strawberry','🍓','f',2,'fruit');
+add('murcott','茂谷柑','Murcott mandarin','🍊','f',0,'fruit');
+add('ponkan','椪柑','Ponkan mandarin','🍊','f',0,'fruit');
+add('waxapple','蓮霧','Wax apple','🍐','f',1,'fruit');
+add('jujube','棗子','Indian jujube','🍏','f',1,'fruit');
+add('carambola','楊桃','Star fruit','⭐','f',0,'fruit');
+add('kumquat','金桔','Kumquat','🍊','f',0,'sour');
+add('loquat','枇杷','Loquat','🍑','f',1,'fruit');
+add('greenplum','梅子','Green plum (ume)','🫒','f',1,'sour');
+add('plum','李子','Plum','🟣','f',1,'fruit');
+add('watermelon','西瓜','Watermelon','🍉','f',0,'fruit');
+add('mulberry','桑葚','Mulberry','🫐','f',2,'fruit');
+add('mango','芒果','Mango','🥭','f',0,'fruit');
+add('lychee','荔枝','Lychee','🔴','f',1,'fruit');
+add('pineapple','鳳梨','Pineapple','🍍','f',0,'pine');
+add('meinong','美濃瓜','Muskmelon','🍈','f',0,'fruit');
+add('cantaloupe','哈密瓜','Cantaloupe','🍈','f',0,'fruit');
+add('longan','龍眼','Longan','🟤','f',0,'fruit');
+add('peach','水蜜桃','Peach','🍑','f',1,'fruit');
+add('passion','百香果','Passion fruit','🟣','f',0,'fruit');
+add('grape','葡萄','Grape','🍇','f',1,'fruit');
+add('pomelo','文旦','Pomelo','🍈','f',0,'fruit');
+add('persimmon','柿子','Persimmon','🟠','f',0,'fruit');
+add('pear','水梨','Asian pear','🍐','f',1,'fruit');
+add('sugarapple','釋迦','Sugar apple','🍈','f',1,'fruit');
+/* seafood */
+add('mullet','烏魚','Grey mullet','🐟','s',2,'fish');
+add('oyster','牡蠣','Oyster','🦪','s',2,'oyster');
+add('mackerel','土魠','Spanish mackerel','🐟','s',2,'fish');
+add('seabass','鱸魚','Sea bass','🐟','s',2,'fish');
+add('tilapia','台灣鯛','Tilapia','🐟','s',2,'fish');
+add('mahi','鬼頭刀','Mahi-mahi','🐟','s',2,'fish');
+add('bluefin','黑鮪魚','Bluefin tuna','🐟','s',2,'tuna');
+add('squid','小卷','Small squid','🦑','s',2,'squid');
+add('milkfish','虱目魚','Milkfish','🐟','s',2,'fish');
+add('eel','鰻魚','Eel','🐟','s',2,'fish');
+add('saury','秋刀魚','Pacific saury','🐟','s',2,'saury',{ d:'f', note:{ zh:'臺灣遠洋漁船在北太平洋公海捕撈，船上急速冷凍，所以標為「遠」。', en:'Caught by Taiwanese distant-water boats in the North Pacific and frozen on board, so it is marked far.' } });
+add('barramundi','金目鱸','Barramundi','🐟','s',2,'fish');
+
+/* imported and year-round market items. mode a=air s=sea (representative assumption), km = representative distance */
+add('blueberry','藍莓','Blueberry','🫐','f',2,'fruit',{imp:1,d:'f',mode:'a',km:11000,org:['美國、智利等','US, Chile and others']});
+add('cherry','櫻桃','Cherry','🍒','f',2,'fruit',{imp:1,d:'f',mode:'a',km:10500,org:['美國等','US and others']});
+add('kiwi','奇異果','Kiwifruit','🥝','f',2,'fruit',{imp:1,d:'f',mode:'s',km:9000,org:['紐西蘭等','New Zealand and others']});
+add('apple','蘋果','Apple','🍎','f',1,'fruit',{imp:1,d:'f',mode:'s',km:9000,org:['日本、美國、紐西蘭等','Japan, US, New Zealand and others']});
+add('banana','香蕉','Banana','🍌','f',1,'fruit',{imp:1,d:'f',mode:'s',km:1800,org:['菲律賓等','Philippines and others']});
+add('avocado','酪梨','Avocado','🥑','f',1,'fruit',{imp:1,d:'f',mode:'s',km:13000,org:['墨西哥、秘魯等','Mexico, Peru and others']});
+add('uorange','進口橙','Imported orange','🍊','f',1,'fruit',{imp:1,d:'f',mode:'s',km:10500,org:['美國、澳洲等','US, Australia and others']});
+add('potato','進口馬鈴薯','Imported potato','🥔','v',0,'spud',{imp:1,d:'f',mode:'s',km:10500,org:['美國等','US and others']});
+add('salmon','鮭魚（養殖進口）','Salmon (farmed, imported)','🍣','s',2,'fish',{imp:1,d:'f',mode:'a',km:9000,org:['挪威、智利等','Norway, Chile and others']});
+add('shrimp','白蝦（進口）','Shrimp (imported)','🦐','s',2,'shrimp',{imp:1,d:'f',mode:'s',km:8000,org:['越南、印度、厄瓜多等','Vietnam, India, Ecuador and others']});
+/* more imports seen in Taiwan markets (Costco Taiwan listings, Oct 2026); year-round availability not verified */
+add('uonion','進口洋蔥（含紫洋蔥）','Imported onion (incl. red)','🧅','v',0,'veg',{imp:1,d:'f',mode:'s',km:10500,org:['美國等','US and others']});
+add('ugarlic','進口蒜頭','Imported garlic','🧄','v',0,'veg',{imp:1,d:'f',mode:'s',km:1500,org:['中國等','China and others']});
+add('japyam','日本山藥','Japanese yam','🍠','v',1,'root',{imp:1,d:'f',mode:'s',km:3000,org:['日本北海道','Hokkaido, Japan']});
+add('thaicorn','泰國真空玉米','Vacuum-packed corn (Thailand)','🌽','v',0,'corn',{imp:1,d:'f',mode:'s',km:3500,org:['泰國','Thailand']});
+add('uromaine','美生菜（進口）','Iceberg lettuce (imported)','🥬','v',2,'leaf',{imp:1,d:'f',mode:'s',km:10500,org:['美國等','US and others']});
+add('frzbean','冷凍四季豆','Frozen green beans','🫛','v',2,'veg',{imp:1,frz:1,d:'f',mode:'s',km:10500,org:['美國','US']});
+add('frzcauli','冷凍花椰菜（含米花椰）','Frozen cauliflower (incl. riced)','🥦','v',2,'veg',{imp:1,frz:1,d:'f',mode:'s',km:17000,org:['義大利、厄瓜多','Italy, Ecuador']});
+add('frzzucchini','冷凍櫛瓜絲','Frozen zucchini noodles','🥒','v',2,'veg',{imp:1,frz:1,d:'f',mode:'s',km:17000,org:['義大利','Italy']});
+add('ugrape','進口葡萄','Imported grapes','🍇','f',2,'fruit',{imp:1,d:'f',mode:'s',km:12000,org:['美國、智利等','US, Chile and others']});
+add('muscat','日本麝香葡萄','Japanese muscat grapes','🍇','f',2,'fruit',{imp:1,d:'f',mode:'a',km:2500,org:['日本長野縣等（空運）','Nagano, Japan and others (air)']});
+add('lemon','進口檸檬','Imported lemon','🍋','f',1,'sour',{imp:1,d:'f',mode:'s',km:12000,org:['美國、智利等','US, Chile and others']});
+add('frzberry','冷凍綜合莓','Frozen mixed berries','🫐','f',2,'frzfruit',{imp:1,frz:1,d:'f',mode:'s',km:15000,org:['智利、美國','Chile, US']});
+add('frzcherry','冷凍櫻桃','Frozen cherries','🍒','f',2,'frzfruit',{imp:1,frz:1,d:'f',mode:'s',km:18000,org:['智利','Chile']});
+add('frzavocado','冷凍酪梨','Frozen avocado','🥑','f',2,'frzfruit',{imp:1,frz:1,d:'f',mode:'s',km:17000,org:['秘魯','Peru']});
+
+add('norwaymack','挪威鯖魚（冷凍）','Norwegian mackerel (frozen)','🐟','s',2,'fish',{imp:1,frz:1,d:'f',mode:'s',km:17000,org:['挪威','Norway']});
+add('cod','鱈魚（冷凍）','Cod / pollock (frozen)','🐟','s',2,'fish',{imp:1,frz:1,d:'f',mode:'s',km:10000,org:['美國阿拉斯加、俄羅斯等','Alaska, Russia and others']});
+add('pork','豬肉','Pork','🥩','m',1,'meat',{mtag:'p',org:['國內為主','Mostly domestic']});
+add('chicken','雞肉','Chicken','🍗','m',1,'meat',{mtag:'c',org:['國內為主','Mostly domestic']});
+add('beef','牛肉','Beef','🥩','m',2,'meat',{mtag:'b',imp:1,d:'f',mode:'s',km:10000,org:['美國、澳洲等','US, Australia and others']});
+add('lamb','羊肉','Lamb','🍖','m',2,'meat',{mtag:'l',imp:1,d:'f',mode:'s',km:9000,org:['紐西蘭、澳洲等','New Zealand, Australia and others']});
+
+/* ===== items for Germany (de_) and Indonesia (id_). fac = kg CO2e per kg (Poore & Nemecek 2018 categories), g = serving override in grams ===== */
+function addN(rg, id, z, e, em, k, c, st, fac, extra) {
+  var o = { id: id, z: z, e: e, em: em, k: k, c: c, st: st, d: 'n', rg: rg, fac: fac, fixed: 1 };
+  if (extra) for (var key in extra) o[key] = extra[key];
+  if (o.imp) o.d = 'f';
+  ITEMS[id] = o;
+}
+var BR = 0.51, RT0 = 0.43, ON = 0.5, PO = 0.46, OV = 0.53, OF = 1.05, BG = 1.53;
+/* Germany: vegetables */
+addN('de','de_grunkohl','羽衣甘藍 Grünkohl','Kale (Grünkohl)','🥬','v',1,'kale',BR);
+addN('de','de_rosenkohl','球芽甘藍 Rosenkohl','Brussels sprouts (Rosenkohl)','🥬','v',1,'kale',BR);
+addN('de','de_rotkohl','紫甘藍 Rotkohl','Red cabbage (Rotkohl)','🥬','v',0,'kale',BR);
+addN('de','de_weisskohl','白甘藍 Weißkohl','White cabbage (Weißkohl)','🥬','v',0,'kale',BR);
+addN('de','de_lauch','韭蔥 Lauch','Leek (Lauch)','🧅','v',1,'kale',ON);
+addN('de','de_pastinake','歐防風 Pastinake','Parsnip (Pastinake)','🥕','v',0,'root',RT0);
+addN('de','de_steckrube','蕪菁甘藍 Steckrübe','Swede (Steckrübe)','🥔','v',0,'root',RT0);
+addN('de','de_feldsalat','野苣 Feldsalat','Lamb’s lettuce (Feldsalat)','🥬','v',1,'salad',OV);
+addN('de','de_kartoffel','馬鈴薯 Kartoffel','Potato (Kartoffel)','🥔','v',0,'spud',PO);
+addN('de','de_sellerie','根芹菜 Knollensellerie','Celeriac (Knollensellerie)','🥔','v',0,'root',RT0);
+addN('de','de_moehre','胡蘿蔔 Möhre','Carrot (Möhre)','🥕','v',0,'root',RT0);
+addN('de','de_spinat','菠菜 Spinat','Spinach (Spinat)','🥬','v',1,'greens',OV);
+addN('de','de_radieschen','櫻桃蘿蔔 Radieschen','Radish (Radieschen)','🌰','v',1,'root',RT0);
+addN('de','de_baerlauch','熊蔥 Bärlauch','Wild garlic (Bärlauch)','🌿','v',1,'salad',ON,{g:30});
+addN('de','de_spargel','白蘆筍 Spargel','White asparagus (Spargel)','🌿','v',1,'shoot',OV);
+addN('de','de_kohlrabi','球莖甘藍 Kohlrabi','Kohlrabi','🥬','v',1,'kale',BR);
+addN('de','de_mangold','莙薘菜 Mangold','Swiss chard (Mangold)','🥬','v',1,'greens',OV);
+addN('de','de_erbsen','豌豆 Erbsen','Peas (Erbsen)','🫛','v',1,'veg',OV);
+addN('de','de_salat','萵苣 Kopfsalat','Lettuce (Kopfsalat)','🥬','v',1,'salad',OV);
+addN('de','de_fruehlingszwiebel','春蔥 Frühlingszwiebel','Spring onion (Frühlingszwiebel)','🌱','v',1,'veg',ON,{g:50});
+addN('de','de_gurke','小黃瓜 Gurke','Cucumber (Gurke)','🥒','v',1,'veg',OV);
+addN('de','de_zucchini','櫛瓜 Zucchini','Zucchini','🥒','v',1,'veg',OV);
+addN('de','de_dicke_bohnen','蠶豆 Dicke Bohnen','Broad beans (Dicke Bohnen)','🫛','v',1,'veg',OV);
+addN('de','de_blumenkohl','白花椰菜 Blumenkohl','Cauliflower (Blumenkohl)','🥦','v',1,'kale',BR);
+addN('de','de_bohnen','四季豆 Bohnen','Green beans (Bohnen)','🫛','v',1,'veg',OV);
+addN('de','de_brokkoli','青花菜 Brokkoli','Broccoli (Brokkoli)','🥦','v',1,'kale',BR);
+addN('de','de_mais','玉米 Mais','Sweet corn (Mais)','🌽','v',1,'veg',OV);
+addN('de','de_pilze','野生菇 Wildpilze','Wild mushrooms (Wildpilze)','🍄','v',1,'mush',OV);
+addN('de','de_kurbis','南瓜 Kürbis','Pumpkin (Kürbis)','🎃','v',0,'root',OV);
+addN('de','de_fenchel','茴香球莖 Fenchel','Fennel (Fenchel)','🌿','v',1,'veg',OV);
+addN('de','de_topinambur','菊芋 Topinambur','Jerusalem artichoke (Topinambur)','🥔','v',0,'root',RT0);
+addN('de','de_rote_bete','紅甜菜 Rote Bete','Beetroot (Rote Bete)','🟣','v',0,'root',RT0);
+/* Germany: fruit */
+addN('de','de_apfel','蘋果 Apfel','Apple (Apfel)','🍎','f',1,'fruit',0.43);
+addN('de','de_birne','梨 Birne','Pear (Birne)','🍐','f',1,'fruit',OF);
+addN('de','de_rhabarber','大黃 Rhabarber','Rhubarb (Rhabarber)','🌱','f',1,'fruit',OF);
+addN('de','de_erdbeere','草莓 Erdbeere','Strawberry (Erdbeere)','🍓','f',2,'fruit',BG);
+addN('de','de_himbeere','覆盆莓 Himbeere','Raspberry (Himbeere)','🍓','f',2,'fruit',BG);
+addN('de','de_heidelbeere','藍莓 Heidelbeere','Blueberry (Heidelbeere)','🫐','f',2,'fruit',BG);
+addN('de','de_johannisbeere','醋栗 Johannisbeere','Currant (Johannisbeere)','🍒','f',2,'fruit',BG);
+addN('de','de_stachelbeere','鵝莓 Stachelbeere','Gooseberry (Stachelbeere)','🟢','f',2,'fruit',BG);
+addN('de','de_suesskirsche','甜櫻桃 Süßkirsche','Sweet cherry (Süßkirsche)','🍒','f',1,'fruit',OF);
+addN('de','de_sauerkirsche','酸櫻桃 Sauerkirsche','Sour cherry (Sauerkirsche)','🍒','f',1,'fruit',OF);
+addN('de','de_aprikose','杏 Aprikose','Apricot (Aprikose)','🍑','f',1,'fruit',OF);
+addN('de','de_brombeere','黑莓 Brombeere','Blackberry (Brombeere)','🫐','f',2,'fruit',BG);
+addN('de','de_pflaume','李子 Pflaume','Plum (Pflaume)','🟣','f',1,'fruit',OF);
+addN('de','de_pfirsich','桃 Pfirsich','Peach (Pfirsich)','🍑','f',1,'fruit',OF);
+addN('de','de_weintraube','葡萄 Weintraube','Grape (Weintraube)','🍇','f',1,'fruit',BG);
+addN('de','de_quitte','榲桲 Quitte','Quince (Quitte)','🍐','f',0,'fruit',OF);
+addN('de','de_walnuss','核桃 Walnuss','Walnut (Walnuss)','🌰','f',0,'fruit',0.43,{g:30});
+addN('de','de_haselnuss','榛果 Haselnuss','Hazelnut (Haselnuss)','🌰','f',0,'fruit',0.43,{g:30});
+/* Germany: seafood */
+addN('de','de_hering','鯡魚 Hering','Herring (Hering)','🐟','s',2,'fish',null);
+addN('de','de_forelle','鱒魚（養殖）Forelle','Trout, farmed (Forelle)','🐟','s',2,'fish',13.63);
+addN('de','de_scholle','鰈魚 Scholle','Plaice (Scholle)','🐟','s',2,'fish',null);
+addN('de','de_muschel','淡菜 Miesmuschel','Mussels (Miesmuschel)','🦪','s',2,'fish',null);
+addN('de','de_krabbe','北海小蝦 Nordseekrabbe','North Sea shrimp (Nordseekrabbe)','🦐','s',2,'shrimp',null);
+/* Germany: imports */
+addN('de','de_tomate','番茄 Tomate（進口）','Tomato (imported)','🍅','v',1,'veg',0.4,{imp:1,mode:'r',km:0,org:['西班牙、荷蘭等（研究值已含運輸）','Spain, Netherlands and others (study value includes transport)']});
+addN('de','de_paprika','甜椒 Paprika（進口）','Bell pepper (imported)','🫑','v',1,'veg',OV,{imp:1,mode:'r',km:2500,org:['西班牙等','Spain and others']});
+addN('de','de_aubergine','茄子 Aubergine（進口）','Aubergine (imported)','🍆','v',1,'veg',OV,{imp:1,mode:'r',km:2500,org:['西班牙等','Spain and others']});
+addN('de','de_zucchini_es','櫛瓜（冬季進口）','Zucchini (winter import)','🥒','v',1,'veg',OV,{imp:1,mode:'r',km:2500,org:['西班牙等','Spain and others']});
+addN('de','de_ingwer','薑 Ingwer','Ginger (Ingwer)','🫚','v',0,'veg',OV,{g:20,imp:1,mode:'s',km:15000,org:['中國、秘魯等','China, Peru and others']});
+addN('de','de_suesskartoffel','地瓜 Süßkartoffel','Sweet potato (Süßkartoffel)','🍠','v',0,'root',PO,{imp:1,mode:'s',km:6000,org:['美國、埃及等','US, Egypt and others']});
+addN('de','de_knoblauch','蒜頭 Knoblauch','Garlic (Knoblauch)','🧄','v',0,'veg',ON,{g:20,imp:1,mode:'r',km:2000,org:['西班牙、中國等','Spain, China and others']});
+addN('de','de_zwiebel_nz','洋蔥（非產季進口）','Onion (off-season import)','🧅','v',0,'veg',ON,{g:80,imp:1,mode:'s',km:20000,org:['紐西蘭等','New Zealand and others']});
+addN('de','de_banane','香蕉 Banane','Banana (Banane)','🍌','f',1,'fruit',0.86,{imp:1,mode:'s',km:11000,org:['厄瓜多、哥倫比亞等','Ecuador, Colombia and others']});
+addN('de','de_orange','柳橙 Orange','Orange','🍊','f',1,'fruit',0.39,{imp:1,mode:'r',km:2500,org:['西班牙等','Spain and others']});
+addN('de','de_avocado','酪梨 Avocado','Avocado','🥑','f',1,'fruit',OF,{imp:1,mode:'s',km:12000,org:['秘魯、智利等','Peru, Chile and others']});
+addN('de','de_kiwi','奇異果 Kiwi','Kiwifruit (Kiwi)','🥝','f',2,'fruit',OF,{imp:1,mode:'r',km:1500,org:['義大利、紐西蘭等','Italy, New Zealand and others']});
+addN('de','de_ananas','鳳梨 Ananas','Pineapple (Ananas)','🍍','f',0,'fruit',OF,{imp:1,mode:'s',km:9500,org:['哥斯大黎加等','Costa Rica and others']});
+addN('de','de_tafeltraube','葡萄（進口）','Table grapes (imported)','🍇','f',2,'fruit',BG,{imp:1,mode:'r',km:1800,org:['義大利、西班牙等','Italy, Spain and others']});
+addN('de','de_blaubeere_imp','藍莓（冬季進口）','Blueberries (off-season import)','🫐','f',2,'fruit',BG,{imp:1,mode:'s',km:12000,org:['秘魯、智利、西班牙等','Peru, Chile, Spain and others']});
+addN('de','de_mango','芒果 Mango','Mango','🥭','f',1,'fruit',OF,{imp:1,mode:'s',km:9500,org:['巴西、秘魯等','Brazil, Peru and others']});
+addN('de','de_lachs','鮭魚（養殖）Lachs','Salmon, farmed (Lachs)','🍣','s',2,'fish',13.63,{imp:1,mode:'r',km:1500,org:['挪威等','Norway and others']});
+addN('de','de_garnele','蝦（進口）Garnelen','Shrimp (imported)','🦐','s',2,'shrimp',26.87,{imp:1,mode:'s',km:17000,org:['越南、厄瓜多等（冷凍）','Vietnam, Ecuador and others (frozen)']});
+addN('de','de_pangasius','巴沙魚 Pangasius','Pangasius','🐟','s',2,'fish',13.63,{imp:1,mode:'s',km:17000,org:['越南（冷凍）','Vietnam (frozen)']});
+addN('de','de_seelachs','阿拉斯加鱈 Seelachs','Alaska pollock (Seelachs)','🐟','s',2,'fish',null,{imp:1,mode:'s',km:14000,org:['美國、俄羅斯（冷凍）','US, Russia (frozen)']});
+/* Germany: meat */
+addN('de','de_schwein','豬肉 Schwein','Pork (Schwein)','🥩','m',1,'meat',12.31,{mtag:'p',org:['國內為主','Mostly domestic']});
+addN('de','de_huhn','雞肉 Huhn','Chicken (Huhn)','🍗','m',1,'meat',9.87,{mtag:'c',org:['國內為主','Mostly domestic']});
+addN('de','de_rind','牛肉 Rind','Beef (Rind)','🥩','m',1,'meat',99.48,{mtag:'b',org:['國內為主','Mostly domestic']});
+addN('de','de_lamm','羊肉 Lamm','Lamb (Lamm)','🍖','m',2,'meat',39.72,{mtag:'l',imp:1,mode:'s',km:20000,org:['紐西蘭等（冷凍）','New Zealand and others (frozen)']});
+/* Indonesia: vegetables */
+addN('id','id_kangkung','空心菜 Kangkung','Water spinach (kangkung)','🌿','v',1,'leaf',OV);
+addN('id','id_bayam','莧菜／菠菜 Bayam','Spinach / amaranth (bayam)','🥬','v',1,'leaf',OV);
+addN('id','id_kubis','高麗菜 Kubis','Cabbage (kubis)','🥬','v',1,'veg',BR);
+addN('id','id_wortel','胡蘿蔔 Wortel','Carrot (wortel)','🥕','v',0,'veg',RT0);
+addN('id','id_tomat','番茄 Tomat','Tomato (tomat)','🍅','v',1,'veg',0.08);
+addN('id','id_cabai','小辣椒 Cabai rawit','Bird’s-eye chili (cabai rawit)','🌶️','v',1,'chili',OV,{g:20});
+addN('id','id_bawang_merah','紅蔥頭 Bawang merah','Shallot (bawang merah)','🧅','v',0,'shallot',ON,{g:50});
+addN('id','id_kacang_panjang','長豆 Kacang panjang','Yardlong bean (kacang panjang)','🫛','v',1,'veg',OV);
+/* Indonesia: fruit */
+addN('id','id_salak','蛇皮果 Salak','Snake fruit (salak)','🟤','f',0,'fruit',OF);
+addN('id','id_alpukat','酪梨 Alpukat','Avocado (alpukat)','🥑','f',1,'fruit',OF);
+addN('id','id_rambutan','紅毛丹 Rambutan','Rambutan','🔴','f',1,'fruit',OF);
+addN('id','id_pisang','香蕉 Pisang','Banana (pisang)','🍌','f',1,'fruit',0.86);
+addN('id','id_pepaya','木瓜 Pepaya','Papaya (pepaya)','🍈','f',1,'fruit',OF);
+addN('id','id_nangka','波羅蜜 Nangka','Jackfruit (nangka)','🍈','f',0,'fruit',OF);
+addN('id','id_durian','榴槤 Durian','Durian','🟡','f',0,'fruit',OF);
+addN('id','id_jeruk_nipis','小青檸 Jeruk nipis','Lime (jeruk nipis)','🍋','f',1,'fruit',0.39,{g:40});
+addN('id','id_duku','杜古 Duku','Duku / langsat','🟤','f',1,'fruit',OF);
+addN('id','id_jambu_biji','芭樂 Jambu biji','Guava (jambu biji)','🍐','f',1,'fruit',OF);
+addN('id','id_sirsak','刺果番荔枝 Sirsak','Soursop (sirsak)','🍈','f',1,'fruit',OF);
+addN('id','id_kesemek','柿子 Kesemek','Persimmon (kesemek)','🟠','f',1,'fruit',OF);
+addN('id','id_belimbing','楊桃 Belimbing','Star fruit (belimbing)','⭐','f',1,'fruit',OF);
+addN('id','id_jambu_mete','腰果蘋果 Jambu mete','Cashew apple (jambu mete)','🍎','f',1,'fruit',OF);
+addN('id','id_melon','甜瓜 Melon','Melon','🍈','f',0,'fruit',OF);
+addN('id','id_mangga','芒果 Mangga','Mango (mangga)','🥭','f',0,'fruit',OF);
+addN('id','id_nanas','鳳梨 Nanas','Pineapple (nanas)','🍍','f',0,'fruit',OF);
+addN('id','id_semangka','西瓜 Semangka','Watermelon (semangka)','🍉','f',0,'fruit',OF);
+addN('id','id_jeruk','橘柑 Jeruk','Orange (jeruk)','🍊','f',0,'fruit',0.39);
+/* Indonesia: seafood */
+addN('id','id_tongkol','小鮪魚 Tongkol','Little tunny (tongkol)','🐟','s',2,'fish',null);
+addN('id','id_kembung','鯖魚 Kembung','Indian mackerel (kembung)','🐟','s',2,'fish',null);
+addN('id','id_bandeng','虱目魚 Bandeng','Milkfish (bandeng)','🐟','s',2,'fish',13.63);
+addN('id','id_nila','吳郭魚 Nila','Tilapia (nila)','🐟','s',2,'fish',13.63);
+/* Indonesia: imports */
+addN('id','id_bawang_putih','蒜頭 Bawang putih','Garlic (bawang putih)','🧄','v',0,'shallot',ON,{g:20,imp:1,mode:'s',km:5000,org:['中國（約 98%）','China (about 98%)']});
+addN('id','id_bawang_bombai','洋蔥 Bawang bombai','Onion (bawang bombai)','🧅','v',0,'shallot',ON,{g:80,imp:1,mode:'s',km:5000,org:['產地未查到，距離為假設','Origin not confirmed; distance assumed']});
+addN('id','id_cabai_kering','乾辣椒 Cabai kering','Dried chili (cabai kering)','🌶️','v',0,'chili',OV,{g:10,imp:1,mode:'s',km:5000,org:['產地未查到，距離為假設','Origin not confirmed; distance assumed']});
+addN('id','id_kentang_industri','加工用馬鈴薯 Kentang industri','Processed-use potato (kentang industri)','🥔','v',0,'spud',PO,{imp:1,mode:'s',km:12000,org:['產地未查到，距離為假設','Origin not confirmed; distance assumed']});
+addN('id','id_tempe','天貝／豆腐（原料大豆進口）','Tempeh / tofu (soybeans imported)','🫘','v',1,'tempe',3.16,{imp:1,mode:'s',km:15000,org:['大豆多來自美國','Soybeans mostly from the US']});
+addN('id','id_apel','蘋果 Apel','Apple (apel)','🍎','f',1,'fruit',0.43,{imp:1,mode:'s',km:6000,org:['中國、美國、紐西蘭','China, US, New Zealand']});
+addN('id','id_pir','梨 Pir','Pear (pir)','🍐','f',1,'fruit',OF,{imp:1,mode:'s',km:5000,org:['中國','China']});
+addN('id','id_mandarin','橘子 Jeruk mandarin','Mandarin (jeruk mandarin)','🍊','f',1,'fruit',0.39,{imp:1,mode:'s',km:5000,org:['中國','China']});
+addN('id','id_anggur','葡萄 Anggur','Grapes (anggur)','🍇','f',2,'fruit',BG,{imp:1,mode:'s',km:8000,org:['中國、美國、埃及等','China, US, Egypt and others']});
+addN('id','id_blueberry','藍莓','Blueberry','🫐','f',2,'fruit',BG,{imp:1,mode:'a',km:6000,org:['產地未查到，假設為空運','Origin not confirmed; air freight assumed']});
+addN('id','id_ceri','櫻桃 Ceri','Cherry (ceri)','🍒','f',2,'fruit',OF,{imp:1,mode:'a',km:6000,org:['澳洲等（假設空運）','Australia and others (air assumed)']});
+addN('id','id_kiwi','奇異果','Kiwifruit','🥝','f',2,'fruit',OF,{imp:1,mode:'s',km:7500,org:['紐西蘭','New Zealand']});
+addN('id','id_jeruk_impor','進口柳橙','Imported orange','🍊','f',1,'fruit',0.39,{imp:1,mode:'s',km:10000,org:['埃及、南非、巴基斯坦等','Egypt, South Africa, Pakistan and others']});
+addN('id','id_salmon','鮭魚（養殖進口）','Salmon (farmed, imported)','🍣','s',2,'fish',13.63,{imp:1,mode:'a',km:12000,org:['挪威、智利等（假設空運）','Norway, Chile and others (air assumed)']});
+addN('id','id_makarel','冷凍鯖魚 Makarel beku','Frozen mackerel (makarel beku)','🐟','s',2,'fish',null,{imp:1,frz:1,mode:'s',km:5000,org:['中國等（待校對）','China and others (needs review)']});
+addN('id','id_kod','冷凍鱈魚','Frozen cod / pollock','🐟','s',2,'fish',null,{imp:1,frz:1,mode:'s',km:15000,org:['阿拉斯加、挪威等（待校對）','Alaska, Norway and others (needs review)']});
+/* Indonesia: meat */
+addN('id','id_ayam','雞肉 Ayam','Chicken (ayam)','🍗','m',1,'meat',9.87,{mtag:'c',org:['國內為主','Mostly domestic']});
+addN('id','id_sapi','牛肉 Sapi','Beef (sapi)','🥩','m',1,'meat',99.48,{mtag:'b',org:['國內為主','Mostly domestic']});
+addN('id','id_kambing','羊肉 Kambing','Goat / lamb (kambing)','🍖','m',1,'meat',39.72,{mtag:'l',org:['國內為主（以羊肉係數估算）','Mostly domestic (lamb factor used)']});
+addN('id','id_kerbau','進口水牛／牛肉（冷凍）','Imported buffalo / beef (frozen)','🥩','m',2,'meat',99.48,{mtag:'b',imp:1,mode:'s',km:5500,org:['印度、澳洲等（待校對）','India, Australia and others (needs review)']});
+
+/* emission factors, kg CO2e per kg of food (farm to retail, global averages). Poore & Nemecek 2018 via OWID dataset.
+   Tomato uses the open-field median (Zhu & Miller 2025) because in-season food is mostly outdoor grown.
+   Wild-caught seafood has no reliable factor here, so fac stays null and is left out of dish totals. */
+(function () {
+  var G = {
+    brassica: [0.51, 'cauli broccoli napa kailan cabbage bokchoy kohlrabi brussels frzcauli'],
+    root: [0.43, 'carrot daikon yam lotusroot japyam'],
+    onion: [0.50, 'garlicshoot chive scallion chiveflower uonion ugarlic'],
+    potato: [0.46, 'potato'],
+    tomato: [0.08, 'tomato'],
+    citrus: [0.39, 'orange murcott ponkan pomelo kumquat uorange lemon'],
+    apple: [0.43, 'apple'],
+    banana: [0.86, 'banana'],
+    berry: [1.53, 'strawberry mulberry blueberry grape ugrape muscat frzberry'],
+    farmfish: [13.63, 'tilapia milkfish seabass barramundi eel salmon'],
+    prawn: [26.87, 'shrimp'],
+    beef: [99.48, 'beef'], lamb: [39.72, 'lamb'], pork: [12.31, 'pork'], chicken: [9.87, 'chicken']
+  };
+  var map = {};
+  for (var g in G) G[g][1].split(' ').forEach(function (id) { map[id] = G[g][0]; });
+  var wild = 'mullet oyster mackerel mahi bluefin squid saury'.split(' ');
+  for (var id in ITEMS) {
+    var it = ITEMS[id];
+    if (it.fixed) continue;
+    if (map[id] != null) it.fac = map[id];
+    else if (wild.indexOf(id) > -1) it.fac = null;
+    else if (it.k === 'v') it.fac = 0.53;
+    else if (it.k === 'f') it.fac = 1.05;
+    else it.fac = null;
+  }
+})();
+
+var PROT = [
+  { z:'牛肉', e:'Beef (beef herd)', co2:99.5 },
+  { z:'豬肉', e:'Pork', co2:12.3 },
+  { z:'雞肉', e:'Chicken', co2:9.9 },
+  { z:'豆腐', e:'Tofu', co2:3.2 },
+  { z:'豌豆', e:'Peas', co2:0.9 }
+];
+
+/* main producing counties for local items, from Agriculture and Food Agency tables (see sources 14, 15). Rankings change by year. */
+
+var RTIP = {
+  tw: { z:'實際產期會因氣候而異，颱風、寒流、乾旱都可能提早或延後。', e:'Real harvest times shift with weather. Typhoons, cold snaps and drought can bring them earlier or later.' },
+  de: { z:'實際產期會因天候而異，春天回暖的早晚、夏天的乾旱或冰雹都會影響。', e:'Real harvest times shift with weather. A late spring, summer drought or hail can all move them.' },
+  id: { z:'實際產期會因降雨與季風而異，乾季與雨季都會影響產量與價格（辣椒與紅蔥頭尤其明顯）。', e:'Real harvest times shift with rain and monsoon. Dry and wet seasons both move supply and prices, chili and shallots especially.' }
+};
+var PROVNOTE = {
+  tw: { z:'「主要產地」為農糧署資料整理的主要產區縣市，順序不代表排名，各年度產量會變動，並非每個縣市都出貨。', e:'“Main areas” lists the leading producing counties from Agriculture and Food Agency tables; the order is not a ranking, output varies by year, and not every county ships at any given time.' },
+  de: { z:'「主要產地」只標出有查到來源的品項（白蘆筍、胡蘿蔔：下薩克森邦為主要產區之一）。', e:'“Main areas” is shown only where a source was found (asparagus and carrots: Lower Saxony is one of the leading states).' },
+  id: { z:'「主要產地」依 BPS 2024 年產量排名，只標出有查到來源的品項（紅蔥頭、小辣椒），順序為產量由高到低。', e:'“Main areas” follows BPS 2024 output rankings and is shown only where a source was found (shallot, bird’s-eye chili), in descending order of output.' }
+};
+var CTY = { '臺南':'Tainan','屏東':'Pingtung','高雄':'Kaohsiung','臺中':'Taichung','南投':'Nantou','嘉義':'Chiayi','彰化':'Changhua','雲林':'Yunlin','苗栗':'Miaoli','新竹':'Hsinchu','新北':'New Taipei','花蓮':'Hualien','臺東':'Taitung','宜蘭':'Yilan','桃園':'Taoyuan','下薩克森邦':'Lower Saxony','中爪哇':'Central Java','東爪哇':'East Java','西爪哇':'West Java','南蘇拉威西':'South Sulawesi','西蘇門答臘':'West Sumatra','北蘇門答臘':'North Sumatra','西努沙登加拉':'West Nusa Tenggara' };
+var PROV = {
+  mango:'臺南 屏東 高雄', lychee:'高雄 臺中 南投', longan:'臺南 臺中 南投 高雄', waxapple:'屏東 高雄 嘉義', jujube:'高雄 屏東 臺南',
+  sugarapple:'臺東 臺南', pomelo:'臺南 花蓮 新北 苗栗 雲林', orange:'臺南 雲林 嘉義 南投', ponkan:'嘉義 臺中 臺南 苗栗 雲林',
+  murcott:'臺中 雲林 嘉義 新竹 苗栗', pineapple:'屏東 臺南 高雄 嘉義 南投', passion:'南投 臺中 屏東', greenplum:'高雄 南投 臺東 臺南 花蓮',
+  pear:'臺中 苗栗 新竹 嘉義', persimmon:'臺中 苗栗 嘉義 新竹', grape:'彰化 苗栗 臺中', strawberry:'苗栗', meinong:'高雄',
+  napa:'嘉義 彰化 雲林', cabbage:'嘉義 彰化 雲林', cauli:'嘉義 彰化 臺南 苗栗 雲林 高雄', scallion:'宜蘭 彰化 雲林 高雄',
+  loofah:'屏東 嘉義 雲林 南投 臺南 高雄', bittermelon:'屏東 彰化 臺中 高雄', tomato:'嘉義 雲林 南投 臺南 高雄', chili:'屏東 嘉義 臺中 臺南 高雄',
+  greenbean:'屏東 彰化 高雄', waterbamboo:'南投 宜蘭 新北', mabamboo:'南投 嘉義 臺中 臺南 雲林 高雄', abamboo:'花蓮',
+  daikon:'南投 彰化 雲林', daylily:'臺東 花蓮', shiitake:'南投 臺中 彰化 雲林', kingoyster:'南投 臺中 彰化 雲林',
+  oystermush:'南投 臺中 彰化 雲林', whitemush:'南投 臺中 彰化 雲林',
+  de_spargel:'下薩克森邦', de_moehre:'下薩克森邦',
+  id_bawang_merah:'中爪哇 東爪哇 南蘇拉威西 西蘇門答臘 西爪哇', id_cabai:'東爪哇 中爪哇 西爪哇 西努沙登加拉 北蘇門答臘'
+};
+function provOf(id) {
+  var p = PROV[id]; if (!p) return '';
+  return p.split(' ').map(function (c) { return lang === 'zh' ? c : CTY[c]; }).join(lang === 'zh' ? '、' : ', ');
+}
+
+var REGIONS = [
+  { g: ['東亞','East Asia'], list: [['tw','台灣','Taiwan',1],['hk','香港','Hong Kong'],['mo','澳門','Macau'],['cn','中國大陸','Mainland China'],['jp','日本','Japan'],['kr','韓國','South Korea']] },
+  { g: ['東南亞','Southeast Asia'], list: [['th','泰國','Thailand'],['vn','越南','Vietnam'],['sg','新加坡','Singapore'],['my','馬來西亞','Malaysia'],['id','印尼','Indonesia',1],['ph','菲律賓','Philippines']] },
+  { g: ['歐洲','Europe'], list: [['de','德國','Germany',1]] }
+];
+
+var DATA = { tw: {
+  months: {
+    1:  { v:['spinach','tongho','kailan','cauli','broccoli','wbamboo','napa','carrot'], f:['orange','strawberry','murcott','ponkan','waxapple','jujube','carambola','kumquat'], s:['mullet','oyster','mackerel','seabass'] },
+    2:  { v:['napa','carrot','onion','garlicshoot','cauli','fushan','spinach','cabbage'], f:['strawberry','murcott','waxapple','jujube','carambola','kumquat','orange','ponkan'], s:['oyster','mackerel','seabass','tilapia'] },
+    3:  { v:['chive','scallion','zucchini','asparagus','tomato','whitemush','cabbage','garlicshoot'], f:['loquat','greenplum','watermelon','plum','carambola','strawberry','murcott','mulberry'], s:['mahi','oyster','seabass','milkfish'] },
+    4:  { v:['greenbean','abamboo','sprouts','chayote','asparagus','oystermush','cucumber','tomato'], f:['mulberry','watermelon','plum','loquat','greenplum','pineapple','mango','passion'], s:['bluefin','mahi','squid','milkfish'] },
+    5:  { v:['cucumber','woodear','okra','loofah','onion','yardbean','greenbean','bittermelon'], f:['mango','lychee','watermelon','plum','pineapple','greenplum','passion','meinong'], s:['bluefin','mahi','squid','saury'] },
+    6:  { v:['mabamboo','basil','pumpkin','bittermelon','lotusseed','lily','cucumber','loofah'], f:['mango','lychee','pineapple','watermelon','meinong','waxapple','peach','passion'], s:['bluefin','squid','saury','eel'] },
+    7:  { v:['bottlegourd','amaranth','wintermelon','chili','corn','waterlily','loofah','okra'], f:['longan','peach','passion','meinong','cantaloupe','pineapple','watermelon','waxapple'], s:['milkfish','eel','squid','saury'] },
+    8:  { v:['wildbitter','daylily','chiveflower','scallion','wintermelon','loofah','amaranth','okra'], f:['longan','passion','pineapple','grape','meinong','mango','waxapple','watermelon'], s:['milkfish','eel','saury','tilapia'] },
+    9:  { v:['papaya','babycorn','yam','lotusroot','greenpepper','shantong','amaranth','wintermelon'], f:['pomelo','persimmon','pear','passion','sugarapple','pineapple','grape','carambola'], s:['saury','milkfish','seabass','tilapia'] },
+    10: { v:['waterbamboo','bokchoy','corn','stickypepper','brussels','scallion','carrot','daikon'], f:['persimmon','carambola','pomelo','pear','sugarapple','pineapple','jujube','passion'], s:['barramundi','milkfish','saury','tilapia'] },
+    11: { v:['daikon','kailan','kohlrabi','fern','carrot','scallion','napa','cabbage'], f:['sugarapple','orange','ponkan','carambola','pineapple','waxapple','persimmon','jujube'], s:['barramundi','tilapia','milkfish','oyster'] },
+    12: { v:['spinach','shiitake','cilantro','cabbage','lettuce','kingoyster','cauli','napa'], f:['strawberry','jujube','orange','ponkan','waxapple','carambola','murcott','kumquat'], s:['mullet','oyster','barramundi','mackerel'] }
+  },
+  always: { v:['potato','uonion','ugarlic','japyam','thaicorn','uromaine','frzbean','frzcauli'], f:['blueberry','cherry','kiwi','apple','banana','avocado','muscat','frzberry'], s:['salmon','shrimp','norwaymack','cod'], m:['pork','chicken','beef','lamb'] },
+  stories: [
+    { z: ['菜脯與福菜：把當季存起來','蘿蔔盛產的冬天，家庭把它曬乾成菜脯，把芥菜醃成福菜，一年都有菜吃，也不必靠冷藏和長途運送。'], e: ['Preserving the season','When winter radish is plentiful, households dry it into cai-pu and cure mustard greens into fu-cai, so the harvest lasts all year without refrigeration or long-distance shipping.'] },
+    { z: ['柿餅：曬太陽的保存術','秋天柿子大量成熟，農家削皮後曬乾，做成柿餅。陽光與風就是保存方式，不需要電力。'], e: ['Persimmon, sun-dried','When persimmons ripen all at once in autumn, farmers peel and sun-dry them into 柿餅. Sun and wind do the preserving, no electricity needed.'] }
+  ]
+}};
+
+DATA.de = {
+  months: {
+    1: { v:['de_grunkohl','de_rosenkohl','de_rotkohl','de_lauch','de_pastinake','de_steckrube','de_feldsalat','de_kartoffel'], f:['de_apfel','de_birne'], s:['de_hering','de_forelle','de_scholle','de_muschel'] },
+    2: { v:['de_grunkohl','de_rosenkohl','de_weisskohl','de_lauch','de_pastinake','de_sellerie','de_feldsalat','de_kartoffel'], f:['de_apfel','de_birne'], s:['de_hering','de_forelle','de_scholle','de_muschel'] },
+    3: { v:['de_weisskohl','de_lauch','de_steckrube','de_spinat','de_radieschen','de_baerlauch','de_moehre','de_kartoffel'], f:['de_apfel','de_birne','de_rhabarber'], s:['de_hering','de_forelle','de_scholle','de_muschel'] },
+    4: { v:['de_spargel','de_baerlauch','de_radieschen','de_spinat','de_kohlrabi','de_lauch','de_mangold','de_moehre'], f:['de_apfel','de_rhabarber'], s:['de_hering','de_forelle','de_scholle','de_muschel'] },
+    5: { v:['de_spargel','de_radieschen','de_spinat','de_kohlrabi','de_erbsen','de_mangold','de_salat','de_fruehlingszwiebel'], f:['de_apfel','de_rhabarber','de_erdbeere'], s:['de_hering','de_forelle','de_scholle','de_krabbe'] },
+    6: { v:['de_spargel','de_erbsen','de_gurke','de_kohlrabi','de_salat','de_zucchini','de_dicke_bohnen','de_blumenkohl'], f:['de_erdbeere','de_himbeere','de_heidelbeere','de_johannisbeere','de_stachelbeere','de_suesskirsche','de_sauerkirsche','de_rhabarber'], s:['de_hering','de_forelle','de_scholle','de_krabbe'] },
+    7: { v:['de_gurke','de_zucchini','de_bohnen','de_erbsen','de_blumenkohl','de_brokkoli','de_salat','de_kohlrabi'], f:['de_erdbeere','de_himbeere','de_heidelbeere','de_johannisbeere','de_stachelbeere','de_suesskirsche','de_aprikose','de_brombeere'], s:['de_hering','de_forelle','de_scholle','de_krabbe'] },
+    8: { v:['de_gurke','de_zucchini','de_bohnen','de_brokkoli','de_mais','de_blumenkohl','de_pilze','de_lauch'], f:['de_himbeere','de_heidelbeere','de_brombeere','de_aprikose','de_pflaume','de_pfirsich','de_apfel','de_birne'], s:['de_hering','de_forelle','de_scholle','de_krabbe'] },
+    9: { v:['de_kurbis','de_mais','de_bohnen','de_brokkoli','de_blumenkohl','de_pilze','de_lauch','de_fenchel'], f:['de_apfel','de_birne','de_pflaume','de_pfirsich','de_weintraube','de_quitte','de_walnuss','de_brombeere'], s:['de_hering','de_forelle','de_scholle','de_muschel'] },
+    10: { v:['de_kurbis','de_pilze','de_brokkoli','de_blumenkohl','de_lauch','de_fenchel','de_topinambur','de_rote_bete'], f:['de_apfel','de_birne','de_pflaume','de_weintraube','de_quitte','de_walnuss','de_haselnuss','de_brombeere'], s:['de_hering','de_forelle','de_scholle','de_muschel'] },
+    11: { v:['de_grunkohl','de_rosenkohl','de_kurbis','de_pilze','de_lauch','de_topinambur','de_feldsalat','de_rotkohl'], f:['de_apfel','de_birne','de_quitte'], s:['de_hering','de_forelle','de_scholle','de_muschel'] },
+    12: { v:['de_grunkohl','de_rosenkohl','de_kurbis','de_lauch','de_topinambur','de_feldsalat','de_rotkohl','de_pastinake'], f:['de_apfel','de_birne','de_quitte'], s:['de_hering','de_forelle','de_scholle','de_muschel'] }
+  },
+  always: { v:['de_tomate','de_paprika','de_aubergine','de_zucchini_es','de_ingwer','de_suesskartoffel','de_knoblauch','de_zwiebel_nz'], f:['de_banane','de_orange','de_avocado','de_kiwi','de_ananas','de_tafeltraube','de_blaubeere_imp','de_mango'], s:['de_lachs','de_garnele','de_pangasius','de_seelachs'], m:['de_schwein','de_huhn','de_rind','de_lamm'] },
+  stories: [
+    { z: ['酸菜：把冬天的高麗菜存起來','德國人把白甘藍切絲加鹽，靠乳酸發酵做成酸菜（Sauerkraut）。不用冷藏也能在冬天吃到蔬菜，這是很典型的在地保存智慧。'], e: ['Sauerkraut: saving winter cabbage','Germans shred white cabbage, add salt and let lactic fermentation turn it into sauerkraut. It keeps through winter without refrigeration, a classic piece of local preservation.'] },
+    { z: ['根莖窖與煮罐頭（Einkochen）','秋天把馬鈴薯、胡蘿蔔、甜菜放進陰涼的地窖，把水果煮成果醬與罐頭。冬天本地水果很少，這些方法讓人吃到當季的味道。'], e: ['Root cellars and Einkochen','In autumn, potatoes, carrots and beetroot go into a cool cellar and fruit is cooked into jam and jars. Local fruit is scarce in winter, and these methods carry the season forward.'] }
+  ],
+  info: { z:'德國冬季本地水果很少，主要是儲存的蘋果與梨，這是冬天水果多半靠進口的原因。蔬菜月份依一般德國季節曆整理，包含儲存與溫室栽培。海鮮月份為概略假設。全部待校對。', e:'Local fruit is scarce in Germany in winter, mostly stored apples and pears, which is why winter fruit is mostly imported. Vegetable months follow common German seasonal calendars and include stored and greenhouse supply. Seafood months are rough assumptions. Everything needs review.' }
+};
+DATA.id = {
+  months: {
+    1: { v:['id_kangkung','id_bayam','id_kubis','id_wortel','id_tomat','id_cabai','id_bawang_merah','id_kacang_panjang'], f:['id_salak','id_alpukat','id_rambutan','id_durian','id_pisang','id_pepaya','id_nangka','id_nanas'], s:['id_tongkol','id_kembung','id_bandeng','id_nila'] },
+    2: { v:['id_kangkung','id_bayam','id_kubis','id_wortel','id_tomat','id_cabai','id_bawang_merah','id_kacang_panjang'], f:['id_salak','id_alpukat','id_rambutan','id_durian','id_duku','id_jambu_biji','id_pisang','id_pepaya'], s:['id_tongkol','id_kembung','id_bandeng','id_nila'] },
+    3: { v:['id_kangkung','id_bayam','id_kubis','id_wortel','id_tomat','id_cabai','id_bawang_merah','id_kacang_panjang'], f:['id_salak','id_jeruk_nipis','id_duku','id_jambu_biji','id_sirsak','id_pisang','id_pepaya','id_nangka'], s:['id_tongkol','id_kembung','id_bandeng','id_nila'] },
+    4: { v:['id_kangkung','id_bayam','id_kubis','id_wortel','id_tomat','id_cabai','id_bawang_merah','id_kacang_panjang'], f:['id_salak','id_jeruk_nipis','id_duku','id_jambu_biji','id_sirsak','id_pisang','id_pepaya','id_nangka'], s:['id_tongkol','id_kembung','id_bandeng','id_nila'] },
+    5: { v:['id_kangkung','id_bayam','id_kubis','id_wortel','id_tomat','id_cabai','id_bawang_merah','id_kacang_panjang'], f:['id_jambu_biji','id_sirsak','id_kesemek','id_pisang','id_pepaya','id_nangka','id_nanas','id_semangka'], s:['id_tongkol','id_kembung','id_bandeng','id_nila'] },
+    6: { v:['id_kangkung','id_bayam','id_kubis','id_wortel','id_tomat','id_cabai','id_bawang_merah','id_kacang_panjang'], f:['id_sirsak','id_kesemek','id_pisang','id_pepaya','id_nangka','id_nanas','id_semangka','id_jeruk'], s:['id_tongkol','id_kembung','id_bandeng','id_nila'] },
+    7: { v:['id_kangkung','id_bayam','id_kubis','id_wortel','id_tomat','id_cabai','id_bawang_merah','id_kacang_panjang'], f:['id_sirsak','id_kesemek','id_belimbing','id_jambu_mete','id_melon','id_pisang','id_pepaya','id_nangka'], s:['id_tongkol','id_kembung','id_bandeng','id_nila'] },
+    8: { v:['id_kangkung','id_bayam','id_kubis','id_wortel','id_tomat','id_cabai','id_bawang_merah','id_kacang_panjang'], f:['id_sirsak','id_belimbing','id_jambu_mete','id_melon','id_mangga','id_pisang','id_pepaya','id_nanas'], s:['id_tongkol','id_kembung','id_bandeng','id_nila'] },
+    9: { v:['id_kangkung','id_bayam','id_kubis','id_wortel','id_tomat','id_cabai','id_bawang_merah','id_kacang_panjang'], f:['id_sirsak','id_jambu_mete','id_melon','id_mangga','id_pisang','id_pepaya','id_nangka','id_nanas'], s:['id_tongkol','id_kembung','id_bandeng','id_nila'] },
+    10: { v:['id_kangkung','id_bayam','id_kubis','id_wortel','id_tomat','id_cabai','id_bawang_merah','id_kacang_panjang'], f:['id_sirsak','id_jambu_biji','id_mangga','id_pisang','id_pepaya','id_nangka','id_nanas','id_semangka'], s:['id_tongkol','id_kembung','id_bandeng','id_nila'] },
+    11: { v:['id_kangkung','id_bayam','id_kubis','id_wortel','id_tomat','id_cabai','id_bawang_merah','id_kacang_panjang'], f:['id_sirsak','id_jambu_biji','id_mangga','id_alpukat','id_rambutan','id_pisang','id_pepaya','id_nangka'], s:['id_tongkol','id_kembung','id_bandeng','id_nila'] },
+    12: { v:['id_kangkung','id_bayam','id_kubis','id_wortel','id_tomat','id_cabai','id_bawang_merah','id_kacang_panjang'], f:['id_sirsak','id_jambu_biji','id_alpukat','id_rambutan','id_durian','id_pisang','id_pepaya','id_nangka'], s:['id_tongkol','id_kembung','id_bandeng','id_nila'] }
+  },
+  always: { v:['id_bawang_putih','id_bawang_bombai','id_cabai_kering','id_kentang_industri','id_tempe'], f:['id_apel','id_pir','id_mandarin','id_anggur','id_blueberry','id_ceri','id_kiwi','id_jeruk_impor'], s:['id_salmon','id_makarel','id_kod'], m:['id_ayam','id_sapi','id_kambing','id_kerbau'] },
+  stories: [
+    { z: ['Pindang：用鹽與慢煮保存魚','印尼（起源於蘇門答臘，尤其是巨港）把魚用粗鹽慢火煮到入味，用鹽量比曬鹹魚少，可以保存幾天到幾個月。魚貨一次大量上岸時，這是不靠冷藏的辦法。'], e: ['Pindang: preserving fish with salt and slow cooking','Originating in Sumatra, especially Palembang, fish is simmered with coarse salt until the liquid reduces. It uses less salt than sun-dried fish and keeps from days to months, a way to cope with big catches without refrigeration.'] },
+    { z: ['天貝（Tempe）：發酵的大豆','天貝是把大豆發酵成餅，是印尼日常的植物性蛋白。但原料大豆多半靠進口，主要來自美國，所以「在地小吃」不一定用在地原料。'], e: ['Tempeh: fermented soybeans','Tempeh is fermented soybean cake and an everyday plant protein in Indonesia. But the soybeans are mostly imported, mainly from the US, so a local dish does not always use local ingredients.'] }
+  ],
+  info: { z:'印尼位於熱帶，蔬菜多半全年都有，所以蔬菜與海鮮每個月相同；只有水果有明顯的季節。大致上爪哇的雨季約 11 月到 3 月，乾季約 4 月到 10 月。全部待校對。', e:'Indonesia is tropical: most vegetables and the local seafood list are available all year, so they stay the same every month. Only fruit is clearly seasonal. On Java the wet season roughly runs November to March and the dry season April to October. Everything needs review.' }
+};
+
+/* ---------- recipe templates (simple, 3 steps each). {n} = ingredient name(s) ---------- */
+function R(z, e, tag, min, zs, es) { return { z: z, e: e, tag: tag, min: min, zs: zs, es: es }; }
+var STY = {
+ frzfruit: [
+  R('{n}優格杯','{n} yogurt cup','d',5,['{n}先在室溫解凍 10 分鐘。','放入杯中。','淋上無糖優格。'],['Thaw the {n} at room temperature for 10 minutes.','Put it in a cup.','Top with plain yogurt.']),
+  R('{n}冰沙','{n} smoothie','v',5,['{n}不用解凍，直接放入果汁機。','加少量水或豆漿。','打成冰沙。'],['Put the {n} straight from the freezer into a blender.','Add a little water or soy milk.','Blend until smooth.']),
+  R('解凍{n}','Thawed {n}','v',10,['{n}放碗中，室溫解凍約 10 分鐘。','瀝掉多餘水分。','可淋少許蜂蜜。'],['Put the {n} in a bowl and thaw at room temperature for about 10 minutes.','Drain the excess liquid.','Drizzle a little honey if you like.'])
+ ],
+ meat: [
+  R('蔥爆{n}','Scallion-fried {n}','m',15,['{n}切薄片，用少許醬油與米酒抓醃 10 分鐘。','熱鍋下油，大火快炒，加蔥段。','一定要炒到完全熟透，加鹽調味。'],['Slice the {n} thin and marinate with a little soy sauce and rice wine for 10 minutes.','Stir-fry over high heat in oil and add scallion.','Cook it all the way through, then season with salt.']),
+  R('{n}蔬菜湯','{n} and vegetable soup','m',25,['水滾放入薑片與{n}塊，煮約 15 分鐘。','加入切好的蔬菜（例如白菜、蘿蔔）。','再煮 10 分鐘，加鹽調味。'],['Add ginger and chunks of {n} to boiling water; simmer about 15 minutes.','Add cut vegetables such as napa cabbage or daikon.','Simmer 10 more minutes and season with salt.']),
+  R('香煎{n}','Pan-seared {n}','m',15,['{n}擦乾，抹鹽與黑胡椒。','熱鍋少油中火，每面煎 4 到 5 分鐘。','確認中心完全熟透，靜置 3 分鐘再切。'],['Pat the {n} dry; season with salt and pepper.','Sear in a little oil over medium heat, 4 to 5 minutes per side.','Make sure the centre is fully cooked; rest 3 minutes before cutting.'])
+ ],
+ shrimp: [
+  R('蒜炒{n}','Garlic-fried {n}','s',8,['{n}洗淨，蒜末爆香。','下{n}大火快炒。','炒到全部變紅，加鹽。'],['Rinse the {n}; fry minced garlic.','Add the {n} over high heat.','Cook until all turns pink; add salt.']),
+  R('{n}薑絲湯','{n} ginger soup','s',10,['水滾放入薑絲。','下{n}煮約 3 分鐘至變紅。','加鹽與蔥花。'],['Add ginger shreds to boiling water.','Add the {n}; cook about 3 minutes until pink.','Season with salt and scallions.']),
+  R('清蒸{n}','Steamed {n}','s',10,['{n}洗淨，鋪上蒜末。','大火蒸約 5 分鐘。','淋醬油。'],['Rinse the {n} and top with garlic.','Steam over high heat about 5 minutes.','Drizzle with soy sauce.'])
+ ],
+ spud: [
+  R('烤{n}','Roasted {n}','v',35,['{n}洗淨切塊，拌少許油與鹽。','烤箱 200℃ 烤 25 到 30 分鐘。','中途翻面一次。'],['Wash and cut the {n}; toss with a little oil and salt.','Roast at 200°C for 25 to 30 minutes.','Turn once halfway.']),
+  R('{n}清湯','Clear {n} soup','v',25,['{n}去皮切塊。','水滾放入，加薑片煮約 15 分鐘。','加鹽調味。'],['Peel and cut the {n}.','Add to boiling water with ginger and cook about 15 minutes.','Season with salt.']),
+  R('水煮{n}','Boiled {n}','v',25,['{n}洗淨，整顆或切塊。','冷水下鍋，煮到筷子能插入。','瀝乾，撒鹽。'],['Wash the {n}; leave whole or cut.','Start in cold water and boil until a chopstick slides in.','Drain and sprinkle with salt.'])
+ ],
+ leaf: [
+  R('蒜炒{n}','Garlic-fried {n}','v',8,['熱鍋下少許油，爆香蒜末。','放入切好的{n}，大火快炒。','加鹽，炒到變軟就起鍋。'],['Heat a little oil and fry minced garlic.','Add the {n} and stir-fry over high heat.','Season with salt and serve once soft.']),
+  R('{n}蛋花湯','{n} egg-drop soup','e',10,['水煮滾，放入切段的{n}。','淋入打散的蛋液，輕輕攪動。','加鹽與少許香油。'],['Bring water to a boil and add chopped {n}.','Pour in beaten egg and stir gently.','Season with salt and a little sesame oil.']),
+  R('涼拌{n}','Dressed {n}','v',10,['水滾後把{n}燙約 1 分鐘。','撈起泡冷水，擠乾切段。','拌蒜末、醬油與香油。'],['Blanch the {n} in boiling water for about 1 minute.','Cool in cold water, squeeze dry and cut.','Toss with garlic, soy sauce and sesame oil.'])
+ ],
+ gourd: [
+  R('涼拌{n}','Quick {n} salad','v',10,['{n}切片（小黃瓜可拍碎），加鹽抓醃。','擠掉出水。','拌蒜末、醋與香油。'],['Slice the {n} (smash cucumber) and salt it.','Squeeze out the water.','Toss with garlic, vinegar and sesame oil.']),
+  R('清炒{n}','Simple stir-fried {n}','v',12,['{n}切片，薑絲爆香。','下{n}翻炒，加少許水燜熟。','加鹽調味即可。'],['Slice the {n}; fry ginger shreds.','Add the {n}, stir-fry, then add a splash of water and cover.','Season with salt.']),
+  R('{n}薑絲湯','{n} ginger soup','v',15,['水滾後放入薑絲與切塊的{n}。','煮到{n}變軟。','加鹽調味。'],['Add ginger shreds and cut {n} to boiling water.','Cook until the {n} is soft.','Season with salt.'])
+ ],
+ root: [
+  R('{n}清湯','Clear {n} soup','v',20,['{n}去皮切塊。','水滾後放入，加薑片煮約 15 分鐘。','加鹽調味。'],['Peel and cut the {n}.','Add to boiling water with ginger and cook about 15 minutes.','Season with salt.']),
+  R('烤{n}','Roasted {n}','v',30,['{n}切塊，拌少許油與鹽。','烤箱 200℃ 烤 20 到 25 分鐘。','中途翻面一次。'],['Cut the {n}; toss with a little oil and salt.','Roast at 200°C for 20 to 25 minutes.','Turn once halfway.']),
+  R('涼拌{n}絲','{n} slaw','v',10,['{n}刨成細絲，加鹽醃 5 分鐘。','擠乾水分。','拌醋與少許糖。'],['Shred the {n} and salt it for 5 minutes.','Squeeze dry.','Toss with vinegar and a pinch of sugar.'])
+ ],
+ shoot: [
+  R('涼拌{n}','Cold {n}','v',15,['{n}煮熟放涼，切塊。','擺盤。','淋醬油與香油。'],['Cook the {n} until tender and cool it; cut up.','Plate it.','Drizzle with soy sauce and sesame oil.']),
+  R('清炒{n}','Stir-fried {n}','v',10,['{n}切段，蒜末爆香。','下{n}大火快炒。','加鹽調味。'],['Cut the {n}; fry minced garlic.','Add the {n} and stir-fry over high heat.','Season with salt.']),
+  R('{n}清湯','Light {n} soup','v',15,['水滾放入{n}。','煮約 10 分鐘。','加鹽與薑絲。'],['Add the {n} to boiling water.','Cook about 10 minutes.','Season with salt and ginger.'])
+ ],
+ veg: [
+  R('清炒{n}','Stir-fried {n}','v',10,['{n}洗淨切好，蒜末爆香。','下{n}翻炒到熟。','加鹽調味。'],['Wash and cut the {n}; fry minced garlic.','Add the {n} and stir-fry until cooked.','Season with salt.']),
+  R('{n}炒蛋','{n} and egg scramble','e',10,['蛋打散，炒到半熟盛起。','炒熟{n}。','倒回蛋，加鹽拌勻。'],['Beat eggs and scramble until half set; set aside.','Stir-fry the {n} until cooked.','Return the eggs, add salt and toss.']),
+  R('{n}煮湯','{n} soup','v',15,['水滾放入薑片與{n}。','煮約 10 分鐘。','加鹽調味。'],['Add ginger slices and the {n} to boiling water.','Simmer about 10 minutes.','Season with salt.'])
+ ],
+ tomato: [
+  R('番茄炒蛋','Tomato and egg stir-fry','e',10,['蛋打散炒到半熟盛起。','{n}切塊炒軟出汁。','倒回蛋，加鹽拌勻。'],['Scramble the eggs lightly and set aside.','Cook the cut {n} until juicy.','Return the eggs and season with salt.']),
+  R('涼拌{n}','Chilled tomato salad','v',5,['{n}切片。','撒少許糖與鹽。','淋醬油與香油，冰 10 分鐘。'],['Slice the {n}.','Sprinkle a little sugar and salt.','Drizzle soy sauce and sesame oil; chill 10 minutes.']),
+  R('{n}蛋花湯','Tomato egg-drop soup','e',12,['{n}切塊，用少許油炒軟。','加水煮滾。','淋入蛋液，加鹽。'],['Soften the cut {n} in a little oil.','Add water and boil.','Stream in egg and season with salt.'])
+ ],
+ corn: [
+  R('水煮{n}','Boiled {n}','v',15,['{n}剝殼洗淨。','水滾後煮 8 到 10 分鐘。','撈起，加一點鹽。'],['Husk and rinse the {n}.','Boil for 8 to 10 minutes.','Drain and add a pinch of salt.']),
+  R('烤{n}','Pan-roasted {n}','v',15,['{n}先煮 5 分鐘。','平底鍋少油煎到表面微焦。','刷醬油，撒一點鹽。'],['Boil the {n} for 5 minutes.','Pan-fry in a little oil until lightly charred.','Brush with soy sauce, add a pinch of salt.']),
+  R('{n}蛋花湯','{n} egg-drop soup','e',15,['{n}切下玉米粒。','水煮滾放入玉米粒，煮 8 分鐘。','淋入蛋液，加鹽。'],['Cut the kernels off the {n}.','Boil the kernels for 8 minutes.','Stream in egg and season with salt.'])
+ ],
+ mush: [
+  R('蒜炒{n}','Garlic-fried {n}','v',8,['{n}撕開或切片。','蒜末爆香，下{n}大火炒。','加鹽，炒到出水收乾。'],['Tear or slice the {n}.','Fry garlic, add the {n} over high heat.','Season with salt and cook until the juices reduce.']),
+  R('{n}煮湯','{n} soup','v',15,['水滾放入薑片與{n}。','煮約 10 分鐘。','加鹽與蔥花。'],['Add ginger and the {n} to boiling water.','Simmer about 10 minutes.','Season with salt and scallions.']),
+  R('{n}炒蛋','{n} and egg scramble','e',10,['蛋打散炒到半熟盛起。','炒熟{n}。','倒回蛋，加鹽。'],['Scramble eggs lightly; set aside.','Stir-fry the {n}.','Return the eggs and add salt.'])
+ ],
+ herb: [
+  R('{n}煎蛋','{n} omelette','e',8,['蛋打散，加切碎的{n}與鹽。','熱鍋少油倒入蛋液。','兩面煎熟。'],['Beat eggs with chopped {n} and salt.','Pour into an oiled hot pan.','Cook both sides.']),
+  R('{n}拌豆腐','{n} on tofu','v',5,['豆腐切塊放盤。','鋪上切碎的{n}。','淋醬油與香油。'],['Plate cubed tofu.','Top with chopped {n}.','Drizzle soy sauce and sesame oil.']),
+  R('{n}提味清湯','Clear soup with {n}','v',10,['先煮好一鍋清湯（水加薑與鹽）。','起鍋前放入切碎的{n}。','馬上熄火。'],['Make a plain ginger-salt broth.','Add chopped {n} just before serving.','Turn off the heat right away.'])
+ ],
+ seed: [
+  R('{n}甜湯','Sweet {n} soup','v',40,['{n}洗淨泡水 30 分鐘。','加水煮到軟。','加冰糖調味。'],['Soak the {n} in water for 30 minutes.','Simmer until soft.','Sweeten with rock sugar.']),
+  R('{n}粥','{n} congee','v',45,['白米洗淨加水煮滾。','放入{n}小火煮約 30 分鐘。','加鹽調味。'],['Bring rinsed rice and water to a boil.','Add the {n} and simmer about 30 minutes.','Season with salt.']),
+  R('清炒{n}','Stir-fried {n}','v',10,['{n}洗淨。','熱鍋少油，下{n}快炒。','加鹽，起鍋前淋少許水。'],['Rinse the {n}.','Stir-fry in a little hot oil.','Season with salt and splash with water at the end.'])
+ ],
+ fruit: [
+  R('直接吃{n}','Just eat the {n}','v',5,['洗淨，需要時剝皮去籽。','切成好入口的大小。','冰鎮 10 分鐘更清爽。'],['Wash; peel and deseed if needed.','Cut into bite-size pieces.','Chill for 10 minutes for extra freshness.']),
+  R('{n}優格杯','{n} yogurt cup','d',5,['{n}切小塊放入杯中。','淋上無糖優格。','可加燕麥或堅果。'],['Put cut {n} in a cup.','Top with plain yogurt.','Add oats or nuts if you like.']),
+  R('{n}冰沙','{n} smoothie','v',10,['{n}切塊先冷凍。','加少量水或豆漿。','打成冰沙。'],['Cut the {n} and freeze it.','Add a little water or soy milk.','Blend until smooth.'])
+ ],
+ pine: [
+  R('直接吃{n}','Fresh {n}','v',5,['去皮切塊。','用鹽水泡 5 分鐘。','冰鎮後吃。'],['Peel and cut.','Soak in salted water for 5 minutes.','Chill and eat.']),
+  R('{n}炒飯','{n} fried rice','e',15,['蛋炒散，加冷飯炒鬆。','放入{n}丁。','加鹽，炒到香。'],['Scramble eggs, add cold rice and break it up.','Add diced {n}.','Season with salt and fry until fragrant.']),
+  R('{n}冰沙','{n} smoothie','v',10,['{n}切塊先冷凍。','加少量水。','打成冰沙。'],['Cut and freeze the {n}.','Add a little water.','Blend until smooth.'])
+ ],
+ sour: [
+  R('糖漬{n}','Sugar-cured {n}','v',5,['{n}洗淨擦乾。','一層{n}一層冰糖放進乾淨玻璃罐。','密封放陰涼處，約一週後可用。'],['Wash and dry the {n}.','Layer {n} and rock sugar in a clean jar.','Seal and keep cool; ready in about a week.']),
+  R('{n}氣泡飲','{n} sparkler','v',5,['取糖漬{n}與汁液入杯。','加冰塊。','倒入氣泡水。'],['Put sugar-cured {n} and its syrup in a glass.','Add ice.','Top with sparkling water.']),
+  R('{n}薑絲蒸魚','Steamed fish with {n}','s',15,['任一白肉魚抹鹽。','鋪上薑絲與{n}。','大火蒸約 10 分鐘。'],['Salt any white-fleshed fish.','Top with ginger shreds and {n}.','Steam over high heat for about 10 minutes.'])
+ ],
+ fish: [
+  R('清蒸{n}','Steamed {n}','s',15,['{n}洗淨，抹鹽，鋪上薑絲。','水滾後大火蒸 8 到 10 分鐘。','淋熱油與醬油。'],['Rinse the {n}, salt it and top with ginger.','Steam over high heat for 8 to 10 minutes.','Drizzle hot oil and soy sauce.']),
+  R('香煎{n}','Pan-seared {n}','s',12,['擦乾{n}，抹少許鹽。','熱鍋少油中火下魚。','兩面各煎 3 到 4 分鐘至金黃。'],['Pat the {n} dry and salt lightly.','Place in a lightly oiled pan over medium heat.','Sear 3 to 4 minutes per side until golden.']),
+  R('{n}薑絲湯','{n} ginger soup','s',15,['水滾放入薑絲。','下{n}煮 5 到 8 分鐘。','加鹽與蔥花。'],['Add ginger shreds to boiling water.','Add the {n} and cook 5 to 8 minutes.','Season with salt and scallions.'])
+ ],
+ saury: [
+  R('鹽烤{n}','Salt-grilled {n}','s',15,['{n}抹鹽。','烤箱 200℃ 或平底鍋烤約 12 分鐘。','擠檸檬汁。'],['Salt the {n}.','Grill at 200°C or pan-grill about 12 minutes.','Squeeze lemon over it.']),
+  R('香煎{n}','Pan-seared {n}','s',12,['擦乾{n}，抹少許鹽。','熱鍋少油中火煎。','兩面金黃即可。'],['Pat the {n} dry and salt lightly.','Sear in a little oil over medium heat.','Cook until both sides are golden.']),
+  R('{n}薑絲湯','{n} ginger soup','s',15,['水滾放入薑絲。','下{n}煮 8 分鐘。','加鹽與蔥花。'],['Add ginger shreds to boiling water.','Add the {n} and cook 8 minutes.','Season with salt and scallions.'])
+ ],
+ tuna: [
+  R('香煎{n}排','Seared {n} steak','s',10,['{n}擦乾，抹鹽與黑胡椒。','熱鍋大火，每面煎約 1 分鐘。','切片，淋醬油。'],['Pat the {n} dry; season with salt and pepper.','Sear in a very hot pan about 1 minute per side.','Slice and drizzle with soy sauce.']),
+  R('{n}丼飯','{n} rice bowl','s',10,['白飯盛入碗中。','鋪上切片的{n}。','淋醬油，加蔥花。'],['Put hot rice in a bowl.','Top with sliced {n}.','Drizzle soy sauce; add scallions.']),
+  R('{n}薑絲湯','{n} ginger soup','s',12,['水滾放入薑絲。','下{n}小塊煮 3 分鐘。','加鹽與蔥花。'],['Add ginger shreds to boiling water.','Add small pieces of {n}; cook 3 minutes.','Season with salt and scallions.'])
+ ],
+ oyster: [
+  R('蚵仔煎','Oyster omelette','s',15,['{n}洗淨，與蛋、青菜一起準備。','熱鍋少油，下{n}與菜煎熟。','倒入蛋液煎到兩面微焦。'],['Rinse the {n}; prep eggs and greens.','Cook the {n} and greens in a little oil.','Pour in egg and cook until lightly browned.']),
+  R('{n}湯','{n} soup','s',12,['水滾放入薑絲。','下{n}煮到浮起。','加鹽與蔥花。'],['Add ginger shreds to boiling water.','Add the {n} and cook until plump.','Season with salt and scallions.']),
+  R('蒜蒸{n}','Garlic-steamed {n}','s',10,['{n}洗淨放盤，鋪蒜末。','大火蒸約 5 分鐘。','淋醬油。'],['Place rinsed {n} on a plate and top with garlic.','Steam over high heat about 5 minutes.','Drizzle with soy sauce.'])
+ ],
+ squid: [
+  R('薑絲川燙{n}','Blanched {n} with ginger','s',8,['水滾放入薑絲。','下{n}燙約 1 分鐘。','撈起，蘸醬油或哇沙米。'],['Add ginger shreds to boiling water.','Blanch the {n} for about 1 minute.','Drain and dip in soy sauce or wasabi.']),
+  R('蒜炒{n}','Garlic-fried {n}','s',8,['熱鍋下油，爆香蒜末。','下{n}大火快炒。','加鹽，炒到變白即可。'],['Heat oil and fry minced garlic.','Add the {n} over high heat.','Season with salt; done when it turns opaque.']),
+  R('{n}清湯','Clear {n} soup','s',10,['水滾放入薑片。','下{n}煮 2 分鐘。','加鹽與蔥花。'],['Add ginger slices to boiling water.','Add the {n} and cook 2 minutes.','Season with salt and scallions.'])
+ ]
+};
+var COMBOS = {
+  vm: R('蔬菜炒{n2}','Vegetable stir-fry with {n2}','m',15,['{n2}切薄片，用醬油抓醃 10 分鐘。','先炒肉到完全熟透，盛起；再炒{n1}。','倒回肉，加鹽拌勻。'],['Slice the {n2} thin and marinate with soy sauce for 10 minutes.','Cook the meat through and set aside; stir-fry {n1}.','Return the meat and season with salt.']),
+  vs: R('蔬菜海鮮湯','Vegetable and seafood soup','s',20,['水滾放入薑片與{n1}。','放入{n2}，煮熟。','加鹽與蔥花。'],['Add ginger and {n1} to boiling water.','Add {n2} and cook through.','Season with salt and scallions.']),
+  vv: R('什錦蔬菜炒','Mixed vegetable stir-fry','v',12,['{n1}洗淨切好，蒜末爆香。','先下較硬的，再下葉菜。','加鹽，炒到熟。'],['Wash and cut {n1}; fry minced garlic.','Add the firmer ones first, then leafy ones.','Season with salt and cook through.']),
+  ff: R('水果優格盤','Fruit and yogurt bowl','d',8,['{n1}切小塊。','放入碗中。','淋上無糖優格。'],['Cut {n1} into small pieces.','Put in a bowl.','Top with plain yogurt.']),
+  fv: R('水果蔬菜沙拉','Fruit and vegetable salad','v',10,['蔬菜燙熟放涼，水果切塊。','全部放入碗中。','拌少許醋與橄欖油。'],['Blanch and cool the vegetables; cut the fruit.','Combine in a bowl.','Toss with a little vinegar and olive oil.'])
+};
+
+
+var STYR = {
+ de: {
+  salad: [
+   R('{n}沙拉（德式油醋）','{n} salad with vinaigrette','v',10,['{n}洗淨瀝乾，撕成適口大小。','油、醋、芥末醬與鹽拌成油醋醬。','淋上拌勻。'],['Wash, dry and tear the {n}.','Whisk oil, vinegar, mustard and salt into a vinaigrette.','Toss together.']),
+   R('{n}馬鈴薯溫沙拉','Warm potato salad with {n}','v',30,['馬鈴薯煮熟切片。','加洋蔥丁、醋、少許高湯與油拌勻。','拌入切碎的{n}。'],['Boil and slice potatoes.','Toss with diced onion, vinegar, a little broth and oil.','Fold in chopped {n}.']),
+   R('{n}黑麥麵包','{n} on rye bread','d',8,['黑麥麵包抹上奶油或酸奶油。','鋪上洗淨的{n}。','撒鹽與胡椒。'],['Spread rye bread with butter or sour cream.','Top with washed {n}.','Season with salt and pepper.'])
+  ],
+  greens: [
+   R('奶油{n}','Creamed {n}','d',15,['{n}洗淨，滾水燙 1 分鐘後擠乾切碎。','洋蔥丁炒香，加少許麵粉與牛奶煮成醬。','拌入{n}，加鹽與一點肉豆蔻。'],['Wash the {n}, blanch 1 minute, squeeze dry and chop.','Fry diced onion, add a little flour and milk to make a sauce.','Stir in the {n}; season with salt and a little nutmeg.']),
+   R('{n}濃湯','{n} soup','v',20,['洋蔥丁與馬鈴薯塊炒香，加水煮 12 分鐘。','放入{n}再煮 3 分鐘。','打成濃湯，加鹽。'],['Fry diced onion and potato, add water and simmer 12 minutes.','Add the {n} and cook 3 more minutes.','Blend into a soup and season with salt.']),
+   R('蒜炒{n}','Garlic-sautéed {n}','v',8,['熱鍋下油，爆香蒜末。','下{n}快炒到變軟。','加鹽調味。'],['Heat oil and fry minced garlic.','Add the {n} and cook until wilted.','Season with salt.'])
+  ],
+  kale: [
+   R('{n}燉菜（Eintopf）','{n} stew (Eintopf)','v',35,['洋蔥、胡蘿蔔、馬鈴薯切塊。','與切好的{n}一起放鍋，加水或高湯。','小火煮 25 分鐘，加鹽與芥末調味。'],['Cut onion, carrot and potato.','Put them in a pot with the cut {n} and water or broth.','Simmer 25 minutes; season with salt and mustard.']),
+   R('煎{n}','Pan-fried {n}','v',15,['{n}切絲或切塊。','平底鍋少油，加洋蔥炒軟。','加鹽、醋與少許糖，加蓋燜 8 分鐘。'],['Shred or cut the {n}.','Soften onion in a little oil, add the {n}.','Season with salt, vinegar and a pinch of sugar; cover and cook 8 minutes.']),
+   R('烤{n}','Roasted {n}','v',30,['{n}切塊，拌油與鹽。','烤箱 200℃ 烤 20 到 25 分鐘。','撒少許醋或檸檬汁。'],['Cut the {n} and toss with oil and salt.','Roast at 200°C for 20 to 25 minutes.','Sprinkle with a little vinegar or lemon juice.'])
+  ],
+  root: [
+   R('烤{n}','Roasted {n}','v',30,['{n}去皮切塊，拌油與鹽。','烤箱 200℃ 烤 25 分鐘。','中途翻面一次。'],['Peel and cut the {n}; toss with oil and salt.','Roast at 200°C for 25 minutes.','Turn once halfway.']),
+   R('{n}濃湯','{n} soup','v',25,['{n}去皮切塊，與洋蔥一起炒香。','加水煮 15 分鐘到軟。','打成濃湯，加鹽。'],['Peel and cut the {n}; fry with onion.','Add water and cook 15 minutes until soft.','Blend into a soup and season with salt.']),
+   R('{n}泥','Mashed {n}','d',25,['{n}去皮切塊，煮到軟。','瀝乾，加牛奶與奶油壓成泥。','加鹽與一點肉豆蔻。'],['Peel, cut and boil the {n} until soft.','Drain and mash with milk and butter.','Season with salt and a little nutmeg.'])
+  ],
+  veg: [
+   R('爐烤{n}（Ofengemüse）','Oven-roasted {n}','v',30,['{n}切塊，拌油、鹽與香草。','烤盤攤平，烤箱 200℃ 烤 20 到 25 分鐘。','撒胡椒。'],['Cut the {n}; toss with oil, salt and herbs.','Spread on a tray and roast at 200°C for 20 to 25 minutes.','Finish with pepper.']),
+   R('{n}湯','{n} soup','v',20,['洋蔥丁炒香。','加{n}與水，煮到軟。','加鹽調味。'],['Fry diced onion.','Add the {n} and water; cook until soft.','Season with salt.']),
+   R('{n}蛋捲','{n} omelette','e',12,['蛋打散加鹽。','{n}炒熟盛起。','倒入蛋液，包入{n}煎成蛋捲。'],['Beat eggs with salt.','Cook the {n} and set aside.','Pour eggs into the pan and fold around the {n}.'])
+  ],
+  spud: [
+   R('水煮{n}','Boiled {n}','v',25,['{n}洗淨，冷水下鍋。','煮到筷子能插入。','瀝乾，撒鹽與香草。'],['Wash the {n} and start in cold water.','Boil until a chopstick slides in.','Drain; sprinkle with salt and herbs.']),
+   R('{n}煎餅（Kartoffelpuffer）','{n} pancakes','e',30,['{n}刨絲擠乾。','加蛋、鹽與少許麵粉拌勻。','平底鍋少油煎到兩面金黃。'],['Grate the {n} and squeeze dry.','Mix with egg, salt and a little flour.','Pan-fry in a little oil until golden on both sides.']),
+   R('烤{n}','Roasted {n}','v',35,['{n}切塊，拌油與鹽。','烤箱 200℃ 烤 25 到 30 分鐘。','中途翻面。'],['Cut the {n}; toss with oil and salt.','Roast at 200°C for 25 to 30 minutes.','Turn halfway.'])
+  ],
+  mush: [
+   R('奶油炒{n}','Creamy pan-fried {n}','d',12,['{n}切片，奶油熱鍋。','大火炒到出水收乾。','加鹽，淋少許鮮奶油，撒香芹。'],['Slice the {n}; heat butter in a pan.','Fry over high heat until the juices reduce.','Season with salt, add a little cream and parsley.']),
+   R('{n}蛋捲','{n} omelette','e',12,['{n}切片炒熟。','蛋打散加鹽。','倒入蛋液包入{n}。'],['Slice and cook the {n}.','Beat eggs with salt.','Pour eggs over and fold around the {n}.']),
+   R('{n}湯','{n} soup','v',20,['洋蔥與{n}炒香。','加水煮 12 分鐘。','加鹽，打成濃湯或保持原樣。'],['Fry onion and the {n}.','Add water and simmer 12 minutes.','Season with salt; blend or leave chunky.'])
+  ],
+  shoot: [
+   R('水煮{n}配馬鈴薯','Boiled {n} with potatoes','d',25,['{n}削皮，水煮 10 到 12 分鐘。','馬鈴薯另外煮熟。','淋融化奶油，撒鹽。'],['Peel the {n} and boil 10 to 12 minutes.','Boil potatoes separately.','Drizzle with melted butter and sprinkle with salt.']),
+   R('烤{n}','Roasted {n}','v',20,['{n}削皮，拌油與鹽。','烤箱 200℃ 烤 15 分鐘。','擠檸檬汁。'],['Peel the {n}; toss with oil and salt.','Roast at 200°C for 15 minutes.','Squeeze lemon over it.']),
+   R('{n}濃湯','{n} soup','v',25,['{n}切段，與洋蔥炒香。','加水煮 15 分鐘。','打成濃湯，加鹽。'],['Cut the {n} and fry with onion.','Add water and cook 15 minutes.','Blend into a soup and season with salt.'])
+  ],
+  fruit: [
+   R('{n}優格杯（Quark）','{n} quark bowl','d',5,['{n}洗淨切小塊。','放入碗中。','淋上凝乳（Quark）或優格。'],['Wash and cut the {n}.','Put in a bowl.','Top with quark or yogurt.']),
+   R('燉{n}（Kompott）','Stewed {n} (Kompott)','v',20,['{n}切塊放鍋，加少量水與糖。','小火煮 10 到 15 分鐘。','放涼後食用。'],['Put the cut {n} in a pot with a little water and sugar.','Simmer 10 to 15 minutes.','Serve once cooled.']),
+   R('直接吃{n}','Eat the {n} fresh','v',3,['洗淨。','需要時去核或剝皮。','直接吃。'],['Wash.','Core or peel if needed.','Eat as is.'])
+  ],
+  meat: [
+   R('香煎{n}','Pan-seared {n}','m',15,['{n}擦乾，抹鹽與胡椒。','熱鍋少油中火，每面煎 4 到 5 分鐘。','確認完全熟透，靜置 3 分鐘再切。'],['Pat the {n} dry; season with salt and pepper.','Sear in a little oil over medium heat, 4 to 5 minutes per side.','Make sure it is fully cooked; rest 3 minutes before cutting.']),
+   R('{n}蔬菜燉鍋','{n} and vegetable stew','m',40,['{n}切塊，煎到表面上色。','加洋蔥、胡蘿蔔、馬鈴薯與水。','小火煮 30 分鐘到熟透，加鹽。'],['Cut the {n} and brown it.','Add onion, carrot, potato and water.','Simmer 30 minutes until cooked through; season with salt.']),
+   R('{n}配酸菜','{n} with sauerkraut','m',25,['{n}煎熟（完全熟透）。','酸菜用少許油加熱。','一起盛盤，配芥末。'],['Cook the {n} all the way through.','Warm sauerkraut in a little oil.','Plate together with mustard.'])
+  ],
+  fish: [
+   R('香煎{n}配馬鈴薯','Pan-fried {n} with potatoes','s',25,['馬鈴薯煮熟切片。','{n}抹鹽，兩面煎熟。','一起盛盤，擠檸檬汁。'],['Boil and slice potatoes.','Salt the {n} and fry both sides.','Plate together and squeeze lemon over.']),
+   R('烤{n}','Oven-baked {n}','s',20,['{n}抹鹽與胡椒，放烤盤。','烤箱 200℃ 烤 12 到 15 分鐘。','擠檸檬汁，撒蒔蘿。'],['Season the {n} with salt and pepper on a tray.','Bake at 200°C for 12 to 15 minutes.','Squeeze lemon and add dill.']),
+   R('{n}馬鈴薯沙拉','{n} with potato salad','s',25,['馬鈴薯煮熟切片，拌醋與洋蔥丁。','{n}煮熟或煎熟切塊。','拌在一起。'],['Boil and slice potatoes; toss with vinegar and onion.','Cook the {n} and cut into pieces.','Combine.'])
+  ],
+  shrimp: [
+   R('蒜炒{n}','Garlic-fried {n}','s',8,['{n}洗淨，蒜末爆香。','下{n}大火快炒。','炒到變紅，加鹽與檸檬汁。'],['Rinse the {n}; fry minced garlic.','Add the {n} over high heat.','Cook until pink; add salt and lemon.']),
+   R('{n}沙拉','{n} salad','s',15,['{n}煮熟放涼。','與生菜、小黃瓜拌在一起。','淋油醋醬。'],['Cook and cool the {n}.','Toss with lettuce and cucumber.','Dress with vinaigrette.']),
+   R('{n}麵包','{n} on bread','s',10,['{n}煮熟。','麵包抹奶油或美乃滋。','鋪上{n}與蒔蘿。'],['Cook the {n}.','Spread bread with butter or mayonnaise.','Top with the {n} and dill.'])
+  ]
+ },
+ id: {
+  leaf: [
+   R('清炒{n}（Tumis）','Stir-fried {n} (tumis)','v',10,['紅蔥頭與蒜頭切片，辣椒切段。','熱油爆香，下{n}大火快炒。','加鹽與少許糖，炒到軟。'],['Slice shallot and garlic; cut chili.','Fry in hot oil, add the {n} over high heat.','Season with salt and a pinch of sugar; cook until soft.']),
+   R('清湯{n}（Sayur bening）','Clear {n} soup (sayur bening)','v',15,['水滾放入紅蔥頭、蒜頭與少許鹽。','下{n}煮 3 分鐘。','加鹽調味，馬上起鍋。'],['Boil water with shallot, garlic and a little salt.','Add the {n} and cook 3 minutes.','Season and serve right away.']),
+   R('涼拌{n}（Urap）','Dressed {n} (urap)','v',15,['{n}燙熟，擠乾。','椰絲加蒜、辣椒與鹽拌成調味料。','與{n}拌勻。'],['Blanch and squeeze the {n}.','Mix grated coconut with garlic, chili and salt.','Toss with the {n}.'])
+  ],
+  veg: [
+   R('清炒{n}（Tumis）','Stir-fried {n} (tumis)','v',12,['{n}洗淨切好，紅蔥頭、蒜頭切片。','熱油爆香，下{n}翻炒。','加鹽與少許醬油。'],['Wash and cut the {n}; slice shallot and garlic.','Fry in hot oil and add the {n}.','Season with salt and a little soy sauce.']),
+   R('{n}蔬菜湯（Sayur sop）','{n} vegetable soup (sayur sop)','v',20,['水煮滾，放入蒜頭、紅蔥頭與芹菜。','下{n}煮到軟。','加鹽與白胡椒。'],['Boil water with garlic, shallot and celery.','Add the {n} and cook until soft.','Season with salt and white pepper.']),
+   R('{n}沙拉配花生醬（Pecel）','{n} with peanut sauce (pecel)','v',20,['{n}燙熟。','花生、辣椒、蒜頭、糖與鹽磨成醬，加水調稀。','淋在{n}上。'],['Blanch the {n}.','Grind peanuts, chili, garlic, sugar and salt into a sauce; thin with water.','Pour over the {n}.'])
+  ],
+  chili: [
+   R('辣椒醬（Sambal）','Chili sambal','v',12,['{n}、紅蔥頭、蒜頭與番茄炒熟。','加鹽與少許糖。','磨碎或剁碎，配飯。'],['Fry the {n}, shallot, garlic and tomato until soft.','Add salt and a little sugar.','Grind or chop; serve with rice.']),
+   R('炒{n}（Tumis cabai）','Stir-fried {n}','v',10,['{n}切段，蒜末爆香。','加少許醬油與糖。','快炒到入味。'],['Cut the {n}; fry minced garlic.','Add a little soy sauce and sugar.','Stir-fry until coated.']),
+   R('酸辣{n}（Acar）','Pickled {n} (acar)','v',15,['{n}切段。','醋、糖、鹽與水煮滾放涼。','倒入{n}浸泡。'],['Cut the {n}.','Boil vinegar, sugar, salt and water; cool.','Pour over the {n} and let it sit.'])
+  ],
+  shallot: [
+   R('炸紅蔥酥（Bawang goreng）','Fried shallots (bawang goreng)','v',20,['{n}切薄片。','冷油下鍋，中火炸到金黃。','撈起瀝油，撒在飯或湯上。'],['Slice the {n} thin.','Fry in cold-start oil over medium heat until golden.','Drain and sprinkle over rice or soup.']),
+   R('酸漬{n}（Acar）','Pickled {n} (acar)','v',15,['{n}切片。','醋、糖、鹽與水煮滾放涼。','浸泡 10 分鐘。'],['Slice the {n}.','Boil vinegar, sugar, salt and water; cool.','Soak for 10 minutes.']),
+   R('{n}炒飯（Nasi goreng）','Fried rice with {n} (nasi goreng)','e',15,['{n}與蒜頭炒香，加蛋炒散。','放入冷飯與甜醬油。','炒到均勻，加辣椒。'],['Fry the {n} and garlic; scramble in an egg.','Add cold rice and sweet soy sauce.','Stir until even; add chili.'])
+  ],
+  fruit: [
+   R('水果沙拉（Rujak）','Fruit salad with spicy sauce (rujak)','v',10,['{n}洗淨切塊。','椰糖、辣椒、鹽與少許羅望子汁拌成醬。','淋在{n}上。'],['Wash and cut the {n}.','Mix palm sugar, chili, salt and a little tamarind into a sauce.','Pour over the {n}.']),
+   R('{n}冰（Es buah）','{n} iced dessert (es buah)','v',8,['{n}切丁。','加冰塊與少許椰奶或糖水。','拌勻即可。'],['Dice the {n}.','Add ice and a little coconut milk or syrup.','Stir and serve.']),
+   R('{n}果汁（Jus）','{n} juice (jus)','v',5,['{n}切塊。','加冰塊與少量水，打成汁。','視需要加糖。'],['Cut the {n}.','Blend with ice and a little water.','Sweeten if needed.'])
+  ],
+  fish: [
+   R('烤{n}（Ikan bakar）','Grilled {n} (ikan bakar)','s',25,['{n}抹鹽、薑黃與蒜泥醃 10 分鐘。','烤架或平底鍋烤到兩面金黃。','配辣椒醬與萊姆。'],['Rub the {n} with salt, turmeric and garlic for 10 minutes.','Grill or pan-grill until golden on both sides.','Serve with sambal and lime.']),
+   R('酸辣燉{n}（Pindang）','{n} in sour broth (pindang)','s',25,['水煮滾，加蒜、薑、羅望子汁與辣椒。','放入{n}小火煮 10 到 12 分鐘。','加鹽調味。'],['Boil water with garlic, ginger, tamarind and chili.','Add the {n} and simmer 10 to 12 minutes.','Season with salt.']),
+   R('香炸{n}（Ikan goreng）','Fried {n} (ikan goreng)','s',20,['{n}抹鹽與薑黃。','熱油中火炸到兩面酥黃。','瀝油，配辣椒醬。'],['Rub the {n} with salt and turmeric.','Fry in hot oil over medium heat until crisp and golden.','Drain and serve with sambal.'])
+  ],
+  meat: [
+   R('醬燜{n}（Semur）','Braised {n} in sweet soy (semur)','m',40,['{n}切塊，與紅蔥頭、蒜頭炒香。','加甜醬油、肉豆蔻與水。','小火燜 30 分鐘到熟透。'],['Cut the {n}; fry with shallot and garlic.','Add sweet soy sauce, nutmeg and water.','Braise 30 minutes until cooked through.']),
+   R('烤串{n}（Sate）','{n} satay (sate)','m',30,['{n}切小塊，用甜醬油與蒜泥醃 15 分鐘。','串上竹籤，烤熟（完全熟透）。','配花生醬。'],['Cut the {n} small; marinate in sweet soy and garlic for 15 minutes.','Skewer and grill until cooked through.','Serve with peanut sauce.']),
+   R('{n}湯（Soto）','{n} soup (soto)','m',40,['水煮滾，放入薑、檸檬葉與{n}。','小火煮 30 分鐘到熟。','加薑黃、鹽與炸紅蔥酥。'],['Boil water with ginger, lime leaf and the {n}.','Simmer 30 minutes until cooked.','Add turmeric, salt and fried shallots.'])
+  ],
+  spud: [
+   R('馬鈴薯餅（Perkedel）','Potato patties (perkedel)','e',30,['{n}煮熟壓泥，加炒香的紅蔥頭。','加蛋與鹽，捏成圓餅。','熱油煎到兩面金黃。'],['Boil and mash the {n}; add fried shallot.','Mix in egg and salt; form patties.','Fry in oil until golden on both sides.']),
+   R('{n}湯','{n} soup','v',25,['{n}去皮切塊。','水煮滾，放入紅蔥頭與蒜頭。','煮 15 分鐘，加鹽與白胡椒。'],['Peel and cut the {n}.','Boil water with shallot and garlic and add the {n}.','Cook 15 minutes; season with salt and white pepper.']),
+   R('辣炒{n}（Balado）','Chili-fried {n} (balado)','v',30,['{n}切塊，煮熟。','辣椒、蒜頭與紅蔥頭炒成醬。','拌入{n}。'],['Cut and boil the {n}.','Fry chili, garlic and shallot into a paste.','Toss with the {n}.'])
+  ],
+  tempe: [
+   R('炸{n}（Goreng）','Fried {n} (goreng)','v',15,['{n}切片，抹鹽與蒜泥。','熱油中火炸到金黃。','瀝油，配辣椒醬。'],['Slice the {n}; rub with salt and garlic.','Fry in hot oil until golden.','Drain and serve with sambal.']),
+   R('甜醬炒{n}（Orek）','Sweet soy stir-fried {n} (orek)','v',15,['{n}切條，炸或煎到微脆。','紅蔥頭、蒜頭與辣椒炒香。','加甜醬油拌炒。'],['Cut the {n} into strips and fry until slightly crisp.','Fry shallot, garlic and chili.','Toss with sweet soy sauce.']),
+   R('{n}沙拉配花生醬','{n} with peanut sauce','v',20,['{n}煎熟。','搭配燙熟的蔬菜。','淋上花生醬。'],['Pan-fry the {n}.','Pair with blanched vegetables.','Pour peanut sauce over.'])
+  ]
+ }
+};
+var COMBOSR = {
+ de: {
+  vm: R('蔬菜燉{n2}','{n2} and vegetable pan','m',30,['{n2}切塊，煎到上色。','加{n1}與洋蔥，加水燉。','小火煮到{n2}完全熟透，加鹽。'],['Cut the {n2} and brown it.','Add {n1} and onion with a little water.','Simmer until the {n2} is cooked through; season with salt.']),
+  vs: R('蔬菜海鮮鍋','Vegetable and seafood pan','s',20,['{n1}切好，洋蔥炒香。','加{n2}與少許水。','煮熟，加鹽與檸檬。'],['Cut the {n1} and fry with onion.','Add the {n2} and a little water.','Cook through; season with salt and lemon.']),
+  vv: R('蔬菜燉鍋（Eintopf）','Vegetable stew (Eintopf)','v',30,['{n1}洗淨切塊。','加洋蔥與水煮到軟。','加鹽與芥末調味。'],['Wash and cut {n1}.','Cook with onion and water until soft.','Season with salt and mustard.']),
+  ff: R('水果凝乳碗','Fruit and quark bowl','d',8,['{n1}切小塊。','放入碗中。','淋上凝乳或優格。'],['Cut {n1} into small pieces.','Put in a bowl.','Top with quark or yogurt.']),
+  fv: R('水果蔬菜沙拉','Fruit and vegetable salad','v',10,['蔬菜洗淨切好，水果切塊。','全部放入碗中。','拌油醋醬。'],['Wash and cut the vegetables; cut the fruit.','Combine in a bowl.','Toss with vinaigrette.'])
+ },
+ id: {
+  vm: R('蔬菜炒{n2}','Vegetable stir-fry with {n2}','m',20,['{n2}切薄片，用甜醬油醃 10 分鐘。','先炒熟{n2}盛起，再炒{n1}。','倒回{n2}，加鹽拌勻。'],['Slice the {n2} thin and marinate in sweet soy for 10 minutes.','Cook the {n2} through and set aside; stir-fry {n1}.','Return the {n2} and season with salt.']),
+  vs: R('蔬菜海鮮湯','Vegetable and seafood soup','s',20,['水滾放入薑、蒜與{n1}。','放入{n2}煮熟。','加鹽與炸紅蔥酥。'],['Boil water with ginger, garlic and {n1}.','Add the {n2} and cook through.','Season with salt and fried shallots.']),
+  vv: R('什錦炒菜（Cap cay）','Mixed vegetable stir-fry (cap cay)','v',15,['{n1}洗淨切好，蒜頭與紅蔥頭爆香。','先下較硬的，再下葉菜。','加鹽與少許蠔油。'],['Wash and cut {n1}; fry garlic and shallot.','Add the firmer ones first, then leafy ones.','Season with salt and a little oyster sauce.']),
+  ff: R('綜合水果沙拉（Rujak）','Mixed fruit rujak','v',10,['{n1}切塊。','椰糖、辣椒、鹽拌成醬。','淋上拌勻。'],['Cut {n1}.','Mix palm sugar, chili and salt into a sauce.','Pour over and toss.']),
+  fv: R('水果蔬菜沙拉（Gado-gado 風）','Fruit and vegetable salad','v',15,['蔬菜燙熟，水果切塊。','全部放入盤中。','淋花生醬。'],['Blanch the vegetables; cut the fruit.','Plate together.','Pour peanut sauce over.'])
+ }
+};
+
+/* ---------- strings ---------- */
+var T = {
+ zh: {
+  brand:'氣候行動 · 食物篇',
+  prov:'主要產地：', frzTag:'冷凍', impTag:'進口', mode:{a:'空運',s:'海運',r:'陸運'}, eg:'例：', always:'全年都有，多為進口', alwaysM:'全年都有', 
+  perServ:'每份約', unit:'kg CO₂e', lvl:['低','中','高'], partial:'不含野生海鮮（無可靠係數）', impShare:function(a,b){return '其中進口食材（含運輸）約 '+a+' kg，占 '+b+'%';},
+  swap:function(a,b,d){return '把「'+a+'」換成本月當季的「'+b+'」，每份約少 '+d+' kg';}, estNote:'估算方式：食材重量（蔬菜水果 150 g，海鮮與肉 100 g）× 每公斤排放係數，進口品再加上運輸；只計主角食材；含蛋的食譜另加 1 顆蛋（60 g，4.67 kg/kg）；牛肉採肉牛係數（乳牛來源牛肉約 33.3）；不含米、油、調味料與優格；冷凍品未計冷凍加工與儲存的能源，數字會偏低。係數為全球平均、運輸為代表性假設，僅供比較。',
+ h1:['每一個選擇','都很重要'], sub:'當季優先，在地加分。拉動月份，看看{r}這個月有哪些當季食材，點「我想吃」就能得到簡單食譜。',
+  soon:'（即將推出）', regionLbl:'選擇地區', regPill:'目前顯示：{r}', regNote:'台灣、印尼、德國已完成，其他地區陸續加入',
+  nav:['市場食材','這個月可以煮','碳排知識','我的承諾','提醒與來源'],
+  tSeason:'這個月，{r}的市場有什麼食材？', lSeason:'先看當季（排在前面），再看全年都有的進口品與肉類。當季優先，在地加分：當季食材多半是露天栽培，不必加溫，也不必長途運送（菇類、芽菜等為室內栽培）。點「我想吃」，下面的食譜會估算每道菜的碳排。',
+  monthN:function(n){return n+'月';}, months:['January','February','March','April','May','June','July','August','September','October','November','December'],
+  legend:['近＝同國內','遠＝跨洲或遠洋（進口品）','冷鏈：常溫／冷藏／全程冷鏈'], legendT:'標籤說明', now:'本月',
+  kind:{v:'蔬菜',f:'水果',s:'海鮮',m:'肉類'}, kindEn:{v:'Vegetables',f:'Fruit',s:'Seafood',m:'Meat'},
+  cold:['常溫','冷藏','全程冷鏈'], dist:{n:'近',f:'遠'}, distL:'距離',
+  want:'我想吃', wanted:'✓ 我想吃', cnt:function(n){return n+' 種';},
+  tCook:'這個月可以煮', lCook:'你點了「我想吃」的食材，會變成 3 到 5 道簡單食譜。',
+  rm:'移除', emptyCook:'還沒有選食材。到上面點「我想吃」，這裡就會出現食譜。', ing:'用到的食材', min:function(n){return n+' 分鐘';},
+  dtag:{v:'純植物性',e:'含蛋',d:'含乳',s:'含海鮮',p:'含豬肉',c:'含雞肉',b:'含牛肉',l:'含羊肉'}, dishNote:'成分標示依常見做法，實際依食譜而異。', story:'傳統保存智慧',
+  tCarbon:'碳排知識', lCarbon:'10 道題庫，每次隨機出 9 題，每題二選一。先憑直覺選，點下去就知道答案。', qScore:function(a,b,c){return '答對 '+a+' ／ 已作答 '+b+' ／ 共 '+c+' 題';}, qAgain:'🔀 重新隨機出題', qRight:'答對了！', qWrong:'再想想。答案是：',
+  k:[
+   ['每公斤食物的溫室氣體','單位：公斤 CO₂e／公斤食物，全球農場平均值。'],
+   ['運輸占多少？','整條供應鏈中，運輸占的比例。牛肉的排放絕大多數來自飼養與土地利用。'],
+   ['每 100 克蛋白質的溫室氣體','單位：公斤 CO₂e。同樣的蛋白質，來源不同差很多。'],
+   ['同樣是番茄，種法差很多','生產階段（農場端）的中位數，公斤 CO₂e／公斤。'],
+   ['在地加溫 vs 進口露天','奧地利加溫溫室番茄，對比從西班牙運來的番茄（公斤 CO₂／公斤）。'],
+   ['溫室加溫最吃能源','溫室番茄的排放中，加溫最多可占的比例。'],
+   ['食物占全球多少？','全球溫室氣體排放中，來自食物生產的比例。'],
+   ['畜產品的份量','食物系統排放中，與畜產品相關的比例。'],
+   ['吃完它','買了卻丟掉，等於白白產生了種植、運送與冷藏的排放。']
+  ],
+  kl:{ a:['牛肉','全部食物'], b:['露天栽培','溫控溫室'], c:['奧地利加溫溫室','西班牙進口（陸運約 2,700 公里）'] },
+  k9:'吃多少、買多少，吃完它。', k5f:'在地不一定等於低碳，種植方式也很重要。',
+  ruleT:'選擇的順序', rule:['先看是不是當季：當季多半是露天栽培，不必加溫。','再看怎麼運來：海運、陸運影響小，空運最耗碳。','最後才看產地遠近：當季又在地，兩者兼得最好。'],
+  callout:'當季在地是降低碳排的有效方式之一。同時少浪費食物、多吃植物性蛋白，影響往往更大。這就是「每一個選擇都很重要」。',
+  tPledge:'我的承諾', lPledge:'選出下週要做的一件事。只存在你自己的瀏覽器，沒有人會看到。',
+  pledges:['這週買菜時，優先選 3 樣當季食材','這週少吃一次牛肉，換成雞肉或豆類','這週把買回來的食材吃完，不讓它壞掉','買水果時先看產地標示，優先選本國產','把一樣進口水果換成本月當季水果','買菜前先列清單，只買吃得完的份量','這週至少有一餐吃純植物性','自備購物袋、餐具，帶便當出門','剩菜隔餐改造成新菜色，不倒掉','下次買水果前，先查這個月的當季清單','去傳統市場或農夫市集買一次菜','這週把肉類份量減半，用豆腐或豆類補上'],
+  pledgedT:'我已經承諾', pledgedDone:'做到了', pledgedUndo:'取消', pledgedOn:'記錄於', done:'已完成',
+  tTips:'提醒與來源',
+  tips:['當季食材通常比較便宜。','在地不一定等於低碳，種植方式也很重要。','節慶食材常不當季，可以在份量與來源上調整。','買食材時，看產地標示、逛當地市集、選擇鄰近產地。','實際產期會因氣候而異，颱風、寒流、乾旱都可能提早或延後。'],
+  srcT:'資料來源與方法說明',
+  foot:['資料整理日期：2026-10-25。月份表由公開資料彙整，尚待校對，請勿視為官方公告。','冷鏈等級與距離等級為概略分級。碳排數字來自文獻，各研究的邊界與假設不同。','「主要產地」為農糧署資料整理的主要產區縣市，順序不代表排名，各年度產量會變動，並非每個縣市都出貨。','未列出任何價格，具體價格請以市場為準。'],
+  lang:'English'
+ },
+ en: {
+  brand:'Climate action · Food',
+  prov:'Main areas: ', frzTag:'Frozen', impTag:'Imported', mode:{a:'Air',s:'Sea',r:'Road'}, eg:'e.g. ', always:'Year-round, mostly imported', alwaysM:'Year-round',
+  perServ:'About', unit:'kg CO₂e per serving', lvl:['Low','Medium','High'], partial:'Wild-caught seafood not counted (no reliable factor)', impShare:function(a,b){return 'Imported food (with transport): about '+a+' kg, '+b+'% of the dish';},
+  swap:function(a,b,d){return 'Swap '+a+' for in-season '+b+' this month: about '+d+' kg less per serving';}, estNote:'How it is estimated: ingredient weight (150 g vegetables and fruit, 100 g seafood and meat) × emission factor per kg, plus transport for imports. Only the main ingredients count, plus one egg (60 g, 4.67 kg/kg) where a dish uses egg; rice, beef uses the beef-herd factor (dairy-herd beef is about 33.3); oil, seasoning and yogurt are left out; for frozen foods the energy of freezing and storage is not counted, so the figure runs low. Factors are global averages and transport is a representative assumption, so use it for comparison only.',
+ h1:['Every choice','matters.'], sub:'In season first, local as a bonus. Move the month slider to see what is in season in {r}. Tap “I want this” to get simple recipes.',
+  soon:' (coming soon)', regionLbl:'Choose a region', regPill:'Showing: {r}', regNote:'Taiwan, Indonesia and Germany are ready; more regions are on the way',
+  nav:['Market','Cook this month','Carbon know-how','My pledge','Notes & sources'],
+  tSeason:'What is on the market in {r} this month?', lSeason:'In-season food comes first, then year-round imports and meat. In season first, local as a bonus: seasonal food is mostly grown outdoors with no heating and does not need to travel far (mushrooms and sprouts are grown indoors). Tap “I want this” and the recipes below estimate each dish’s carbon.',
+  monthN:function(n){return String(n);}, months:['一月','二月','三月','四月','五月','六月','七月','八月','九月','十月','十一月','十二月'],
+  legend:['Near = within the country','Far = another continent or distant waters (imports)','Cold chain: ambient / chilled / full'], legendT:'Label guide', now:'This month',
+  kind:{v:'Vegetables',f:'Fruit',s:'Seafood',m:'Meat'}, kindEn:{v:'蔬菜',f:'水果',s:'海鮮',m:'肉類'},
+  cold:['Ambient','Chilled','Full cold chain'], dist:{n:'Near',f:'Far'}, distL:'Distance',
+  want:'I want this', wanted:'✓ I want this', cnt:function(n){return n+' items';},
+  tCook:'Cook this month', lCook:'The foods you tap “I want this” on turn into 3 to 5 simple recipes.',
+  rm:'Remove', emptyCook:'Nothing picked yet. Tap “I want this” above and recipes will show up here.', ing:'Uses', min:function(n){return n+' min';},
+  dtag:{v:'Plant-based',e:'Contains egg',d:'Contains dairy',s:'Contains seafood',p:'Contains pork',c:'Contains chicken',b:'Contains beef',l:'Contains lamb'}, dishNote:'Ingredient tags follow common recipes and vary by cook.', story:'Traditional preservation',
+  tCarbon:'Carbon know-how', lCarbon:'A bank of 10 questions; each round draws 9 at random, two choices each. Go with your gut, tap, and see the answer.', qScore:function(a,b,c){return 'Correct '+a+' / answered '+b+' / total '+c;}, qAgain:'🔀 New random set', qRight:'Correct! ', qWrong:'Not quite. The answer: ',
+  k:[
+   ['Greenhouse gas per kilogram of food','Unit: kg CO₂e per kg of food, global farm averages.'],
+   ['How big is transport?','Share of emissions across the whole supply chain. Most of beef’s emissions come from raising animals and land use.'],
+   ['Greenhouse gas per 100 g of protein','Unit: kg CO₂e. The same protein can cost very different amounts.'],
+   ['Same tomato, very different growing','Median at the farm stage, kg CO₂e per kg.'],
+   ['Local heated vs imported open-field','Austrian heated-greenhouse tomatoes vs tomatoes from Spain (kg CO₂ per kg).'],
+   ['Greenhouse heating eats energy','Share of a greenhouse tomato’s emissions that heating can account for, at most.'],
+   ['How much of the world’s emissions is food?','Share of global greenhouse gas emissions from food production.'],
+   ['The weight of animal products','Share of food-system emissions linked to animal products.'],
+   ['Finish it','Food bought and thrown away wastes the emissions of growing, shipping and chilling it.']
+  ],
+  kl:{ a:['Beef','All food'], b:['Open field','Climate-controlled greenhouse'], c:['Austrian heated greenhouse','Spanish import (about 2,700 km by road)'] },
+  k9:'Buy what you will eat, then eat it.', k5f:'Local does not always mean low-carbon. How it is grown matters too.',
+  ruleT:'The order to choose in', rule:['First, is it in season? In-season food is mostly grown outdoors with no heating.','Second, how did it travel? Sea and road matter little; air freight is the worst.','Last, how far? In season and local gets you both.'],
+  callout:'Seasonal and local is one effective way to cut emissions. Wasting less food and eating more plant protein often matters more. That is why every choice matters.',
+  tPledge:'My pledge', lPledge:'Pick one thing to do next week. It stays in your own browser. Nobody else sees it.',
+  pledges:['Choose 3 seasonal foods when I shop this week','Eat beef once less this week; choose chicken or legumes','Finish the food I buy this week; let none spoil','Check the origin label on fruit and choose domestically grown','Swap one imported fruit for a seasonal one this month','Write a shopping list and buy only what I will finish','Have at least one fully plant-based meal this week','Bring my own bag and utensils; pack a lunch','Turn leftovers into a new dish instead of binning them','Check this month’s seasonal list before buying fruit','Shop once at a traditional market or farmers’ market','Halve my meat portions this week; add tofu or legumes'],
+  pledgedT:'My pledge', pledgedDone:'Done it', pledgedUndo:'Clear', pledgedOn:'Saved on', done:'Done',
+  tTips:'Notes & sources',
+  tips:['Seasonal food is usually cheaper.','Local does not always mean low-carbon. How it is grown matters too.','Festival foods are often out of season. Adjust the portion and the source.','Check the origin label, visit local markets, and choose nearby sources.','Real harvest times shift with weather. Typhoons, cold snaps and drought can bring them earlier or later.'],
+  srcT:'Sources and method',
+  foot:['Data compiled 2026-10-25. Monthly lists are assembled from public sources and still need review. Not an official notice.','Cold-chain and distance levels are rough categories. Emission figures come from the literature; each study sets its own boundaries and assumptions.','“Main areas” lists the leading producing counties from Agriculture and Food Agency tables; the order is not a ranking, output varies by year, and not every county ships at any given time.','No prices are shown. Check the market for real prices.'],
+  lang:'繁體中文'
+ }
+};
+
+/* ---------- state ---------- */
+var lang = (function(){ var l = ((navigator.language || (navigator.languages && navigator.languages[0]) || 'en') + '').toLowerCase(); return l.indexOf('zh') === 0 ? 'zh' : 'en'; })();
+var region = 'tw';
+var curMonth = new Date().getMonth() + 1;
+var month = curMonth;
+var WANT = null;
+var pledge = null;
+try { var raw = localStorage.getItem('ecm-pledge'); if (raw) pledge = JSON.parse(raw); } catch (e) {}
+
+function $(id) { return document.getElementById(id); }
+function t() { return T[lang]; }
+function nm(it) { return lang === 'zh' ? it.z : it.e; }
+function nm2(it) { return lang === 'zh' ? it.e : it.z; }
+function pill(cls, txt) { return '<span class="pill ' + cls + '">' + txt + '</span>'; }
+function D() { return DATA[region]; }
+function regionName() { var n = region; REGIONS.forEach(function (g) { g.list.forEach(function (r) { if (r[0] === region) n = lang === 'zh' ? r[1] : r[2]; }); }); return n; }
+function monthIds() { var m = D().months[month]; return m.v.concat(m.f, m.s); }
+function wants() {
+  if (!WANT) { var m = D().months[month]; WANT = [m.v[0], m.f[0], m.s[0]].filter(Boolean); }
+  return WANT;
+}
+function sup() { var h = ''; for (var i = 0; i < arguments.length; i++) h += '<sup><a href="#src' + arguments[i] + '" aria-label="source ' + arguments[i] + '">[' + arguments[i] + ']</a></sup>'; return h; }
+var SOURCES = [
+ ['Poore, J. & Nemecek, T. (2018). Reducing food’s environmental impacts through producers and consumers. Science 360(6392):987–992. Figures via Our World in Data (kg CO₂e per kg: beef from beef herd 99.5, pork 12.3, chicken 9.9, tofu 3.2, peas 0.9). Transport shares via Our World in Data.', 'https://ourworldindata.org/grapher/ghg-per-kg-poore'],
+ ['Zhu, Z. & Miller, S. A. (2025). Greenhouse gas emissions of tomato production and supply: a systematic review. Resources, Conservation and Recycling 218:108236. Medians: open field 80 kg CO₂e per tonne, climate-controlled protected environments 1,709 kg CO₂e per tonne.', 'https://css.umich.edu/publications/research-publications/greenhouse-gas-emissions-tomato-production-and-supply-systematic'],
+ ['University of Vienna thesis: environmental impacts of eight tomato production systems in Austria, Spain and Italy (Austrian glasshouse 1.4, Almería greenhouse imported by road about 2,700 km 0.4 kg CO₂ per kg; heating up to 80% of emissions).', 'https://utheses.univie.ac.at/detail/1924'],
+ ['Theurl, M. C. et al. Contrasted greenhouse gas emissions from local versus long-range tomato production (FiBL Austria). Imported Spanish and Italian tomatoes had about half the emissions of Austrian heated-system tomatoes.', 'https://www.fibl.org/fileadmin/documents/de/oesterreich/arbeitsschwerpunkte/Klima/theurl_production_tomato_1312.pdf'],
+ ['農業部「農政與農情」生產預測報告（蔬菜、果品產期）。Taiwan Ministry of Agriculture crop outlook reports.', 'https://www.moa.gov.tw/ws.php?id=4309'],
+ ['農業部漁業署：國產水產品與當季魚種推廣資料。Fisheries Agency notes on seasonal domestic seafood.', 'https://www.moa.gov.tw/ws.php?id=2506648'],
+ ['康健雜誌：當季水果指南（12 個月代表水果）。CommonHealth seasonal fruit guide.', 'https://www.commonhealth.com.tw/article/88453'],
+ ['月份蔬菜對照表（綜合參考）。Monthly vegetable table, compiled reference.', 'https://uptogo.com.tw/?p=39426'],
+ ['Karolinska Institutet student blog summarising Poore & Nemecek (2018): per 100 g protein, beef 20, poultry 2.4, tofu 1, peas 0.3 kg CO₂e; livestock linked to 58% of food emissions.', 'https://studentblogs.ki.se/eating-100-gram-of-protein-from-beef-contribution-to-20-kg-carbon-dioxide-equivalent'],
+ ['Our World in Data: food transport by mode (emission factors in kg CO₂e per tonne-km, ambient: road 0.2, rail 0.05, sea 0.01 to 0.023, air 1.13). The 10,000 km per-kg figures on this page are our own arithmetic from these factors.', 'https://ourworldindata.org/food-transport-by-mode'],
+ ['HortiDaily: comparison of greenhouse and open-field tomatoes, citing Poore & Nemecek (food supply about 26% of global greenhouse gas emissions).', 'https://www.hortidaily.com/article/9745439/comparison-made-between-greenhouse-vegetables-and-open-field-tomatoes/']
+];
+SOURCES.push(['Our World in Data / Zenodo mirror of Poore & Nemecek (2018) “GHG emissions per kilogram of food product” (kg CO₂e per kg: Brassicas 0.51, Root vegetables 0.43, Onions & Leeks 0.5, Other vegetables 0.53, Potatoes 0.46, Citrus 0.39, Apples 0.43, Bananas 0.86, Berries & Grapes 1.53, Other fruit 1.05, Fish (farmed) 13.63, Prawns (farmed) 26.87, Beef (beef herd) 99.48, Lamb & mutton 39.72, Pig meat 12.31, Poultry 9.87). Used for the dish estimates; global averages, farm to retail.', 'https://zenodo.org/records/14916809']);
+SOURCES.push(['Dish-estimate method (this page): portion × factor, plus for imports distance × transport factor. Transport factors from [10]: sea 0.01 (ambient) or 0.02 (temperature-controlled), air 1.13 kg CO₂e per tonne-km. Distances and modes are representative assumptions for each product, not trade statistics. Tomato uses the open-field median from [2]. Needs review.', 'https://ourworldindata.org/food-transport-by-mode']);
+SOURCES.push(['農業部農糧署：水果產期與主要產地縣市對照表（香蕉、鳳梨、荔枝、龍眼、愛文芒果、巨峰葡萄、蓮霧、棗、釋迦、文旦、柳橙、椪柑、茂谷柑、百香果、梅、梨、柿等）。Agriculture and Food Agency fruit calendar with main producing counties.', 'https://www.afa.gov.tw/cht/index.php?act=download&ids=44428']);
+SOURCES.push(['愛料理整理的農糧署 9 月蔬菜主要產地（高麗菜、大白菜、花椰菜、青蔥、絲瓜、苦瓜、番茄、辣椒、菜豆、茭白筍、麻竹筍、箭竹筍、白蘿蔔、菇類、金針）；蘿蔔另參考農業部農情報告。草莓（苗栗）與美濃瓜（高雄）為一般常識，待校對。', 'https://icook.tw/blogs/236090']);
+
+[4,5,6,7,13,14].forEach(function (i) { SOURCES[i][2] = 'tw'; });
+SOURCES.push(['Plantura Saisonkalender für Gemüse (Monatsangaben, regional; enthält Freiland, geschützten Anbau und Lagerware). Used for German vegetable months.', 'https://www.plantura.garden/gartenkalender/saisonkalender-fuer-gemuese', 'de']);
+SOURCES.push(['Plantura Saisonkalender für Obst (Monatsangaben, Lagerware bei Äpfeln und Birnen). Used for German fruit months.', 'https://www.plantura.garden/gartenkalender/saisonkalender-fuer-obst', 'de']);
+SOURCES.push(['Selbstversorgungsgrade in Deutschland (Stand Juli 2024): Kartoffeln 147 %, Schweinefleisch 147 %, Gemüse 36 %, Obst 23 %, Äpfel 57 %, Erdbeeren 45 %, Spargel und Möhren je 75 %, Tomaten 3,5 %.', 'https://www.leinetal24.de/welt/kartoffeln-kaese-fleisch-bauern-deutschland-landwirt-herstellung-essen-obst-gemuese-zr-93138428.html', 'de']);
+SOURCES.push(['Empfohlene Fische (Hering, Miesmuscheln, Scholle) aus dem Nordostatlantik und der Ostsee. Seafood months are rough assumptions; imported origins and distances are representative assumptions.', 'https://www.schwaebische.de/themen/nur-12-fische-stehen-auf-guter-fisch-liste-1316883', 'de']);
+SOURCES.push(['IDN Times: Kalender Musim Buah di Indonesia (month lists for salak, alpukat, rambutan, durian, mangga, sirsak, melon and others). Year-round items (nanas, semangka, jeruk) added from general knowledge, to be reviewed.', 'https://www.idntimes.com/science/discovery/kalender-musim-buah-di-indonesia-q9t01-00-s66xw-lx4rhb', 'id']);
+SOURCES.push(['BPS via Bisnis.com (Jan–May 2026): China supplied 98.31% of Indonesia’s garlic imports.', 'https://ekonomi.bisnis.com/read/20260713/12/1987590/bps-china-kuasai-98-pasokan-impor-bawang-putih-di-indonesia', 'id']);
+SOURCES.push(['Kontan: Indonesian vegetable imports named by Kementan: garlic, industrial potatoes, onions (bawang bombai), dried chili. Source countries not stated there.', 'https://industri.kontan.co.id/news/bps-catat-impor-sayuran-melonjak-begini-respons-kementan', 'id']);
+SOURCES.push(['GoodStats (BPS): top fruit supplier countries to Indonesia in 2025: China 649.4 thousand tonnes, Egypt, United States, South Africa, Pakistan, New Zealand.', 'https://data.goodstats.id/statistic/10-negara-pengimpor-buah-terbesar-ke-indonesia-2025-Cr3MK', 'id']);
+SOURCES.push(['FreshPlaza: Indonesia imports pears, apples, citrus, blueberries and cherries, mostly from China (61%), Thailand (9%) and Australia (8%).', 'https://www.freshplaza.com/north-america/article/9178619/indonesia-wants-to-become-self-sufficient-but-for-now-still-needs-fruit-imports/', 'id']);
+SOURCES.push(['Detik: Indonesia’s tempeh and tofu depend on imported soybeans; Jan–Oct 2020 the US supplied about 1.92 of 2.11 million tonnes.', 'https://finance.detik.com/berita-ekonomi-bisnis/d-5319361/miris-ri-negeri-tempe-tahu-tapi-bergantung-kedelai-impor-ini-datanya', 'id']);
+SOURCES.push(['GoodStats (BPS): 2024 shallot production by province: Central Java, East Java, South Sulawesi, West Sumatra, West Java.', 'https://data.goodstats.id/statistic/jawa-tengah-jadi-raja-bawang-merah-ini-10-provinsi-penghasil-terbesar-di-2024-OIHaz', 'id']);
+SOURCES.push(['GoodStats (BPS): 2024 bird’s-eye chili production by province: East Java, Central Java, West Java, West Nusa Tenggara, North Sumatra.', 'https://data.goodstats.id/statistic/10-provinsi-penghasil-cabai-rawit-terbesar-di-indonesia-2024-Yba4N', 'id']);
+SOURCES.push(['Wikipedia: Pindang, an Indonesian wet preservation method for fish (coarse salt, slow simmering), originating in Sumatra.', 'https://en.wikipedia.org/wiki/Pindang', 'id']);
+
+/* ---------- render ---------- */
+var QUIZ = [
+ { q:['每公斤食物，哪一個的溫室氣體排放比較高？','Per kilogram of food, which has the higher emissions?'], o:[['牛肉（約 99.5 kg CO₂e）','Beef (about 99.5 kg CO₂e)'],['雞肉（約 9.9 kg CO₂e）','Chicken (about 9.9 kg CO₂e)']], c:0, w:['牛肉。','Beef.'], y:['牛肉大約是雞肉的 10 倍。豬肉約 12.3，豆腐約 3.2，豌豆約 0.9。','Beef is about 10 times chicken. Pork is about 12.3, tofu 3.2, peas 0.9.'], r:[1] },
+ { q:['牛肉的排放中，運輸大約占多少？','How much of beef’s emissions come from transport?'], o:[['不到 1%','Under 1%'],['大約一半','About half']], c:0, w:['不到 1%。','Under 1%.'], y:['牛肉約 0.5% 來自運輸，絕大多數來自飼養與土地利用。全部食物平均運輸也只占約 6%。','About 0.5% for beef; most comes from raising the animals and land use. Across all food, transport averages only about 6%.'], r:[1] },
+ { q:['吃同樣 100 克蛋白質，牛肉的排放大約是豆腐的幾倍？','For the same 100 g of protein, beef emits roughly how many times tofu?'], o:[['約 2 倍','About 2 times'],['約 20 倍','About 20 times']], c:1, w:['約 20 倍。','About 20 times.'], y:['每 100 克蛋白質：牛肉約 20、雞肉 2.4、豆腐 1、豌豆 0.3 kg CO₂e。','Per 100 g protein: beef about 20, chicken 2.4, tofu 1, peas 0.3 kg CO₂e.'], r:[9] },
+ { q:['同樣是番茄，哪一種種法的排放比較低？','Same tomato. Which growing method has lower emissions?'], o:[['露天栽培','Open field'],['溫控溫室','Climate-controlled greenhouse']], c:0, w:['露天栽培。','Open field.'], y:['露天約 0.08，溫控溫室約 1.7 kg CO₂e／公斤，差了 20 倍以上。','Open field is about 0.08 and a climate-controlled greenhouse about 1.7 kg CO₂e per kg, over 20 times more.'], r:[2] },
+ { q:['奧地利本地加溫溫室的番茄，和西班牙露天種、陸運來的番茄，哪個排放較低？','Austrian heated-greenhouse tomatoes or Spanish open-field tomatoes trucked in: which is lower?'], o:[['奧地利本地加溫','Austrian, locally heated'],['西班牙進口（陸運約 2,700 公里）','Spanish import (about 2,700 km by road)']], c:1, w:['西班牙進口。','The Spanish import.'], y:['本地加溫約 1.4，進口約 0.4 kg CO₂／公斤。在地不等於低碳：反季節加溫的在地番茄，比當季露天的進口番茄更高。順序是：當季又在地最好，其次是當季的進口，最差是反季節加溫。','Local heated is about 1.4 and the import about 0.4 kg CO₂ per kg. Local is not automatically low-carbon: an out-of-season heated local tomato can be worse than an in-season open-field import. Best is in-season and local, next in-season imported, worst out-of-season and heated.'], r:[3,4] },
+ { q:['溫室番茄的排放中，加溫最多可以占多少？','At most, how much of a greenhouse tomato’s emissions can heating account for?'], o:[['約 10%','About 10%'],['可高達 80%','Up to 80%']], c:1, w:['可高達 80%。','Up to 80%.'], y:['反季節的溫室栽培很吃能源，這就是當季食材比較低碳的原因之一。','Out-of-season greenhouse growing is energy hungry. That is one reason seasonal food tends to be lower-carbon.'], r:[3] },
+ { q:['全球溫室氣體排放中，食物生產大約占多少？','What share of global greenhouse gas emissions comes from food production?'], o:[['約 1/20','About 1/20'],['約 1/4','About 1/4']], c:1, w:['約四分之一。','About a quarter.'], y:['食物系統約占全球排放的 26%。所以吃什麼，真的是氣候行動的一部分。','The food system is about 26% of global emissions, so what we eat really is part of climate action.'], r:[11] },
+ { q:['食物系統的排放中，和畜產品有關的大約占多少？','Of food-system emissions, how much is linked to animal products?'], o:[['不到一成','Under 10%'],['超過一半','More than half']], c:1, w:['超過一半。','More than half.'], y:['約 58% 與畜產品有關，肉類與魚類生產就占約 53%。','About 58% is linked to livestock, and meat and fish production alone is about 53%.'], r:[9,11] },
+ { q:['同樣運送 1 萬公里，空運的運輸排放大約是海運的幾倍？','Over the same 10,000 km, air freight emits roughly how many times more than sea freight?'], o:[['約 5 倍','About 5 times'],['約 50 倍','About 50 times']], c:1, w:['約 50 倍。','About 50 times.'], y:['每噸公里：空運約 1.13，海運約 0.023，陸運約 0.2 kg CO₂e。1 萬公里下，空運約 11 kg，海運約 0.2 kg CO₂e／公斤食物（依上述係數推算）。所以空運進口的生鮮最不划算，運輸方式比距離更關鍵。','Per tonne-km: air about 1.13, sea about 0.023, road about 0.2 kg CO₂e. Over 10,000 km that is roughly 11 kg for air and 0.2 kg for sea per kg of food (our arithmetic from these factors). Air-freighted fresh food is the worst case; the mode matters more than the distance.'], r:[10] },
+ { q:['想減少食物碳排，下面哪個做法比較有效？','To cut food emissions, which habit is more effective?'], o:[['買適量，並且把它吃完','Buy what you need and finish it'],['多買一點放冰箱，以防萬一','Buy extra and keep it in the fridge, just in case']], c:0, w:['買適量，並且吃完。','Buy what you need and finish it.'], y:['丟掉的食物，等於白白產生了種植、運送與冷藏的排放。這題為定性說明，沒有引用單一數字。','Thrown-away food wastes the emissions of growing, shipping and chilling it. This one is qualitative; no single figure is cited.'], r:[] }
+];
+var quiz = null;
+function shuffle(a) { for (var i = a.length - 1; i > 0; i--) { var j = Math.floor(Math.random() * (i + 1)); var x = a[i]; a[i] = a[j]; a[j] = x; } return a; }
+function newQuiz() {
+  var ord = shuffle(QUIZ.map(function (_, i) { return i; })).slice(0, 9);
+  quiz = ord.map(function (i) { return { i: i, flip: Math.random() < 0.5, pick: null }; });
+}
+function renderKnowledge() {
+  var L = lang === 'zh' ? 0 : 1, s = t();
+  if (!quiz) newQuiz();
+  var done = quiz.filter(function (x) { return x.pick !== null; }).length;
+  var score = quiz.filter(function (x) { return x.pick !== null && x.pick === QUIZ[x.i].c; }).length;
+  var h = '<div class="qbar"><span class="qscore" aria-live="polite">' + s.qScore(score, done, quiz.length) + '</span><button type="button" class="btn" id="qAgain">' + s.qAgain + '</button></div><div class="qgrid">';
+  quiz.forEach(function (x, n) {
+    var q = QUIZ[x.i], idx = x.flip ? [1, 0] : [0, 1];
+    h += '<article class="panel qc"><div class="qn">Q' + (n + 1) + ' / ' + quiz.length + '</div><h3>' + q.q[L] + '</h3><div class="opts">';
+    idx.forEach(function (oi) {
+      var cls = '';
+      if (x.pick !== null) { if (oi === q.c) cls = ' right'; else if (oi === x.pick) cls = ' wrong'; }
+      h += '<button type="button" class="opt' + cls + '" data-q="' + n + '" data-o="' + oi + '"' + (x.pick !== null ? ' disabled' : '') + '>' + q.o[oi][L] + '</button>';
+    });
+    h += '</div>';
+    if (x.pick !== null) {
+      h += '<div class="ans"><b>' + (x.pick === q.c ? s.qRight : s.qWrong) + q.w[L] + '</b>' + q.y[L] + (q.r.length ? sup.apply(null, q.r) : '') + '</div>';
+    }
+    h += '</article>';
+  });
+  h += '</div>';
+  $('kgrid').innerHTML = h;
+}
+function renderStatic() {
+  var s = t();
+  document.documentElement.lang = lang === 'zh' ? 'zh-Hant' : 'en';
+  document.title = lang === 'zh' ? '每一個選擇都很重要' : 'Every choice matters';
+  $('brand').textContent = s.brand;
+  $('h1').innerHTML = s.h1[0] + '<br><em>' + s.h1[1] + '</em>';
+  var RN = regionName();
+  $('sub').textContent = s.sub.replace('{r}', RN);
+  $('regPill').textContent = s.regPill.replace('{r}', RN); $('regNote').textContent = s.regNote;
+  $('langBtn').textContent = s.lang;
+  $('region').setAttribute('aria-label', s.regionLbl);
+  var sel = '';
+  REGIONS.forEach(function (g) {
+    sel += '<optgroup label="' + (lang === 'zh' ? g.g[0] : g.g[1]) + '">';
+    g.list.forEach(function (r) {
+      var ready = !!r[3];
+      sel += '<option value="' + r[0] + '"' + (ready ? '' : ' disabled') + (r[0] === region ? ' selected' : '') + '>' + (lang === 'zh' ? r[1] : r[2]) + (ready ? '' : s.soon) + '</option>';
+    });
+    sel += '</optgroup>';
+  });
+  $('region').innerHTML = sel;
+  var ids = ['season', 'cook', 'carbon', 'pledge', 'tips'];
+  $('nav').innerHTML = ids.map(function (id, i) { return '<a href="#' + id + '">' + s.nav[i] + '</a>'; }).join('');
+  $('t-season').textContent = s.tSeason.replace('{r}', RN); $('l-season').textContent = s.lSeason;
+  $('t-cook').textContent = s.tCook; $('l-cook').textContent = s.lCook;
+  $('t-carbon').textContent = s.tCarbon; $('l-carbon').textContent = s.lCarbon;
+  $('t-pledge').textContent = s.tPledge; $('l-pledge').textContent = s.lPledge;
+  $('t-tips').textContent = s.tTips;
+  $('legend').innerHTML = '<b>' + s.legendT + '</b>' + s.legend.map(function (x) { return '<span>' + x + '</span>'; }).join('');
+  var tips = s.tips.slice(); tips[4] = RTIP[region][lang === 'zh' ? 'z' : 'e'];
+  $('tipsGrid').innerHTML = tips.map(function (x) { return '<div class="tip">' + x + '</div>'; }).join('');
+  $('src').innerHTML = '<b>' + s.srcT + '</b><ol>' + SOURCES.map(function (x, i) { return x[2] && x[2] !== region ? '' : '<li value="' + (i + 1) + '" id="src' + (i + 1) + '">' + x[0] + ' <a href="' + x[1] + '" target="_blank" rel="noopener">link</a></li>'; }).join('') + '</ol>';
+  var ft = s.foot.slice(); ft[2] = PROVNOTE[region][lang === 'zh' ? 'z' : 'e'];
+  $('foot').innerHTML = ft.map(function (x) { return '<p>' + x + '</p>'; }).join('');
+  renderKnowledge();
+  $('callout').innerHTML = '<b>' + s.ruleT + '</b><ol>' + s.rule.map(function (x) { return '<li>' + x + '</li>'; }).join('') + '</ol><p>' + s.callout + '</p>';
+  $('pledges').innerHTML = s.pledges.map(function (x, i) { return '<button type="button" class="pledge" data-i="' + i + '" aria-pressed="' + !!(pledge && pledge.i === i) + '">' + x + '</button>'; }).join('');
+  renderPledged();
+  $('mrow').innerHTML = [1,2,3,4,5,6,7,8,9,10,11,12].map(function (m) { return '<button type="button" data-m="' + m + '" class="' + (m === curMonth ? 'now' : '') + '" aria-pressed="' + (m === month) + '">' + s.monthN(m) + '</button>'; }).join('');
+}
+function tile(id, w, s) {
+  var it = ITEMS[id], on = w.indexOf(id) > -1, L = lang === 'zh' ? 0 : 1;
+  var tg = '';
+  if (it.imp) tg += pill('red', s.impTag) + pill('red', s.mode[it.mode]) + (it.frz ? pill('', s.frzTag) : '');
+  tg += pill(it.d === 'f' ? 'red' : '', s.distL + ' ' + s.dist[it.d]) + pill(it.c === 2 ? 'red' : '', s.cold[it.c]);
+  return '<article class="tile' + (on ? ' on' : '') + '"><div class="em" aria-hidden="true">' + it.em + '</div><div><div class="nm">' + nm(it) + '</div><div class="nm2">' + nm2(it) + '</div></div>' +
+    '<div class="tags">' + tg + '</div>' +
+    (it.org ? '<p class="note">' + (it.imp ? s.eg : '') + it.org[L] + '</p>' : '') +
+    (!it.imp && provOf(id) ? '<p class="note">📍 ' + s.prov + provOf(id) + '</p>' : '') +
+    (it.note ? '<p class="note">' + it.note[lang] + '</p>' : '') +
+    '<button type="button" class="want" data-want="' + id + '" aria-pressed="' + on + '">' + (on ? s.wanted : s.want) + '</button></article>';
+}
+function renderSeason() {
+  var s = t(), w = wants(), m = D().months[month], al = D().always;
+  $('month').value = month;
+  $('mbig').textContent = s.monthN(month);
+  $('mname').textContent = s.months[month - 1] + (month === curMonth ? ' · ' + s.now : '');
+  Array.prototype.forEach.call($('mrow').children, function (b) { b.setAttribute('aria-pressed', String(+b.getAttribute('data-m') === month)); });
+  var h = '';
+  ['v', 'f', 's', 'm'].forEach(function (k) {
+    var ids = m[k] || [], extra = al[k] || [];
+    h += '<div class="grp ' + k + '"><h3>' + s.kind[k] + ' <small>' + s.kindEn[k] + ' · ' + s.cnt(ids.length + extra.length) + '</small></h3>';
+    if (ids.length) h += '<div class="grid">' + ids.map(function (id) { return tile(id, w, s); }).join('') + '</div>';
+    if (extra.length) h += '<h4 class="subh">' + (ids.length ? s.always : s.alwaysM) + '</h4><div class="grid">' + extra.map(function (id) { return tile(id, w, s); }).join('') + '</div>';
+    h += '</div>';
+  });
+  $('groups').innerHTML = h;
+  var inf = D().info; $('regInfo').textContent = inf ? inf[lang === 'zh' ? 'z' : 'e'] : '';
+}
+function fill(str, a, b) { return str.replace(/\{n1\}/g, a).replace(/\{n2\}/g, b == null ? a : b).replace(/\{n\}/g, a); }
+function portion(it) { return it.g || { v: 150, f: 150, s: 100, m: 100 }[it.k]; }
+function trKg(it) { if (!it.imp) return 0; var fac = it.mode === 'a' ? 1.13 : it.mode === 'r' ? (it.c > 0 ? 0.43 : 0.2) : (it.c > 0 ? 0.02 : 0.01); return it.km * fac / 1000; }
+function co2(it) { return it.fac == null ? null : portion(it) / 1000 * (it.fac + trKg(it)); }
+function co2imp(it) { return it.imp && it.fac != null ? portion(it) / 1000 * (it.fac + trKg(it)) : 0; }
+function fmt(x) { return x < 1 ? x.toFixed(2) : x.toFixed(1); }
+function subFor(it) {
+  if (!it.imp || (it.g && it.g <= 80) || it.id === 'id_tempe') return null;
+  if (it.k === 'm') return it.id === 'pork' || it.id === 'chicken' ? null : ITEMS.chicken;
+  var best = null;
+  D().months[month][it.k].forEach(function (id) { var c = ITEMS[id]; if (c.fac != null && (best === null || c.fac < best.fac)) best = c; });
+  return best;
+}
+function nmR(it) {
+  if (!it.rg) return nm(it);
+  if (lang === 'zh') return it.z.replace(/\s+[A-Za-zÄÖÜäöüß’'\.\-\/ ]+/g, '');
+  return it.e.replace(/\s*\(([^)]*)\)$/, function (m, g) { return /imported|frozen|farmed|air|off-season|winter|study|incl|retail/i.test(g) ? m : ''; });
+}
+function buildRecipes(ids) {
+  var out = [], its = ids.map(function (id) { return ITEMS[id]; });
+  var of = function (k) { return its.filter(function (i) { return i.k === k; }); };
+  var vs = of('v'), fs = of('f'), ss = of('s'), ms = of('m');
+  var join = function (arr) { return arr.map(nmR).join(lang === 'zh' ? '、' : ', '); };
+  var CB = COMBOSR[region] || COMBOS, SY = STYR[region] || {};
+  var combos = [];
+  if (vs.length && ms.length) combos.push({ r: CB.vm || COMBOS.vm, a: join(vs), b: join(ms), items: vs.concat(ms) });
+  if (vs.length && ss.length) combos.push({ r: CB.vs || COMBOS.vs, a: join(vs), b: join(ss), items: vs.concat(ss) });
+  if (vs.length >= 2) combos.push({ r: CB.vv || COMBOS.vv, a: join(vs), items: vs });
+  if (fs.length >= 2) combos.push({ r: CB.ff || COMBOS.ff, a: join(fs), items: fs });
+  if (fs.length && vs.length) combos.push({ r: CB.fv || COMBOS.fv, a: join(vs), items: vs.concat(fs) });
+  combos.slice(0, 2).forEach(function (c) { out.push({ r: c.r, n: c.a, n2: c.b, items: c.items }); });
+  for (var round = 0; round < 3 && out.length < 5; round++) {
+    for (var i = 0; i < its.length && out.length < 5; i++) {
+      out.push({ r: (SY[its[i].st] || STY[its[i].st])[round], n: nmR(its[i]), items: [its[i]] });
+    }
+  }
+  return out.slice(0, 5);
+}
+function renderCook() {
+  var s = t(), w = wants();
+  $('chips').innerHTML = w.length ? w.map(function (id) { var it = ITEMS[id]; return '<span class="chip">' + it.em + ' ' + nm(it) + '<button type="button" data-rm="' + id + '" aria-label="' + s.rm + ' ' + nm(it) + '">×</button></span>'; }).join('') : '';
+  if (!w.length) { $('recipes').innerHTML = '<div class="empty" style="grid-column:1/-1">' + s.emptyCook + '</div>'; }
+  else {
+    $('recipes').innerHTML = buildRecipes(w).map(function (x) {
+      var r = x.r, L = lang === 'zh';
+      var title = fill(L ? r.z : r.e, x.n, x.n2);
+      var steps = (L ? r.zs : r.es).map(function (st) { return '<li>' + fill(st, x.n, x.n2) + '</li>'; }).join('');
+      var ing = x.items.map(function (it) { return it.em + ' ' + nm(it); }).join('　');
+      var tag = r.tag;
+      if (tag === 'm') { var mi = x.items.filter(function (i) { return i.k === 'm'; })[0]; tag = mi ? mi.mtag : 'v'; }
+      var tot = 0, impc = 0, partial = false, notes = '';
+      if (r.tag === 'e') tot += 0.06 * 4.67;
+      x.items.forEach(function (it) { var c = co2(it); if (c == null) partial = true; else { tot += c; impc += co2imp(it); } });
+      x.items.forEach(function (it) {
+        var sb = subFor(it); if (!sb) return;
+        var d = co2(it) - co2(sb);
+        if (d > 0.05) notes += '<p class="note">💡 ' + s.swap(nm(it), nm(sb), fmt(d)) + '</p>';
+      });
+      var lv = tot < 0.3 ? 0 : tot < 1.5 ? 1 : 2;
+      var co = '<div class="co2 lv' + lv + '"><span>' + s.perServ + '</span><b>' + fmt(tot) + '</b><span>' + s.unit + '</span>' + pill(lv === 0 ? '' : lv === 1 ? 'yel' : 'red', s.lvl[lv]) + sup(12, 13) + '</div>' +
+        (impc > 0.005 ? '<p class="note">' + s.impShare(fmt(impc), Math.round(impc / tot * 100)) + '</p>' : '') +
+        (partial ? '<p class="note">⚠ ' + s.partial + '</p>' : '') + notes;
+      return '<article class="rcp"><div><h3>' + title + '</h3></div><div class="tags">' + pill('yel', s.min(r.min)) + pill(tag === 'v' ? '' : 'yel', s.dtag[tag]) + '</div>' + co + '<p class="note">' + s.ing + '：' + ing + '</p><ol>' + steps + '</ol></article>';
+    }).join('');
+  }
+  var st = D().stories[(month - 1) % D().stories.length], sp = st[lang === 'zh' ? 'z' : 'e'];
+  $('story').innerHTML = '<b>' + s.story + '：' + sp[0] + '</b><span>' + sp[1] + '</span><span class="note">' + s.dishNote + '</span><span class="note">' + s.estNote + '</span>';
+}
+function renderPledged() {
+  var s = t(), box = $('pledged');
+  if (!pledge) { box.className = 'pledged'; box.innerHTML = ''; return; }
+  box.className = 'pledged on';
+  box.innerHTML = '<b>' + s.pledgedT + '：' + s.pledges[pledge.i] + '</b><span class="note">' + s.pledgedOn + ' ' + pledge.d + (pledge.done ? ' · ' + s.done : '') + '</span><div style="display:flex;gap:8px;flex-wrap:wrap"><button type="button" class="mini" id="pDone">' + s.pledgedDone + '</button><button type="button" class="mini" id="pUndo">' + s.pledgedUndo + '</button></div>';
+  Array.prototype.forEach.call(document.querySelectorAll('.pledge'), function (b) { b.setAttribute('aria-pressed', String(+b.getAttribute('data-i') === pledge.i)); });
+}
+function savePledge() { try { if (pledge) localStorage.setItem('ecm-pledge', JSON.stringify(pledge)); else localStorage.removeItem('ecm-pledge'); } catch (e) {} }
+function renderAll() { renderStatic(); renderSeason(); renderCook(); }
+function setMonth(m) {
+  month = m;
+  var mm = D().months[m], al = D().always;
+  WANT = wants().filter(function (id) { var it = ITEMS[id]; return mm[it.k] ? mm[it.k].indexOf(id) > -1 || al[it.k].indexOf(id) > -1 : al[it.k].indexOf(id) > -1; });
+  renderSeason(); renderCook();
+}
+
+/* ---------- events ---------- */
+$('langBtn').addEventListener('click', function () { lang = lang === 'zh' ? 'en' : 'zh'; renderAll(); });
+$('region').addEventListener('change', function (e) { region = e.target.value; WANT = null; renderAll(); });
+$('month').addEventListener('input', function (e) { setMonth(+e.target.value); });
+$('mrow').addEventListener('click', function (e) { var b = e.target.closest('button[data-m]'); if (b) setMonth(+b.getAttribute('data-m')); });
+$('groups').addEventListener('click', function (e) {
+  var b = e.target.closest('button[data-want]'); if (!b) return;
+  var id = b.getAttribute('data-want'), w = wants(), i = w.indexOf(id);
+  if (i > -1) w.splice(i, 1); else w.push(id);
+  renderSeason(); renderCook();
+});
+$('chips').addEventListener('click', function (e) {
+  var b = e.target.closest('button[data-rm]'); if (!b) return;
+  var w = wants(), i = w.indexOf(b.getAttribute('data-rm')); if (i > -1) w.splice(i, 1);
+  renderSeason(); renderCook();
+});
+$('kgrid').addEventListener('click', function (e) {
+  if (e.target.id === 'qAgain') { newQuiz(); renderKnowledge(); return; }
+  var b = e.target.closest('button[data-q]'); if (!b) return;
+  var x = quiz[+b.getAttribute('data-q')]; if (x.pick !== null) return;
+  x.pick = +b.getAttribute('data-o'); renderKnowledge();
+});
+$('pledges').addEventListener('click', function (e) {
+  var b = e.target.closest('button[data-i]'); if (!b) return;
+  pledge = { i: +b.getAttribute('data-i'), d: new Date().toISOString().slice(0, 10), done: false }; savePledge(); renderPledged();
+});
+$('pledged').addEventListener('click', function (e) {
+  if (e.target.id === 'pDone' && pledge) { pledge.done = true; savePledge(); renderPledged(); }
+  if (e.target.id === 'pUndo') { pledge = null; savePledge(); renderPledged(); Array.prototype.forEach.call(document.querySelectorAll('.pledge'), function (b) { b.setAttribute('aria-pressed', 'false'); }); }
+});
+renderAll();
+</script>
+</body>
+</html>
